@@ -1,0 +1,518 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Directions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxmYQNIYPn1wRMW-E0kpudz-UO3Gcbw1M&libraries=places"></script>
+    <link rel="stylesheet" href="{% static './css/directions.css' %}" />
+    <style>
+      #map {
+        height: 400px;
+        width: 100%;
+      }
+  
+      #cities {
+        font-family: Arial, sans-serif;
+        background-color: #111;
+        color: #fff;
+        line-height: 1.5;
+        width: 100%;
+        margin: 0%;
+        padding: 0%;
+      }
+  
+      a {
+        color: #fff;
+        text-decoration: none;
+      }
+  
+      a:hover {
+        color: #00bfff;
+      }
+  
+      .container {
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 20px;
+      }
+  
+      .text-center {
+        text-align: center;
+      }
+  
+      .divider {
+        border-bottom: 1px solid #444;
+        margin: 20px 0;
+      }
+  
+      /* Popular cities section */
+      .popular-cities {
+        font-size: 14px;
+      }
+  
+      .popular-cities a {
+        display: inline-block;
+        margin: 0 5px;
+      }
+  
+      .more-link {
+        display: block;
+        margin-top: 10px;
+        font-size: 12px;
+      }
+  
+      /* Services list */
+      .services {
+        font-size: 14px;
+        margin: 20px 0;
+      }
+  
+      /* Cab routes */
+      .cab-routes {
+        
+      }
+  
+      .cab-column {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        /* min-width: 200px; */
+        margin: 10px;
+      }
+  
+      .cab-column h3 {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+  
+      .cab-column ul {
+        list-style: none;
+      }
+  
+      .cab-column li {
+        margin-bottom: 8px;
+      }
+  
+      .explore-more {
+        margin-top: 20px;
+        font-size: 12px;
+      }
+  
+      .logo-img{
+          height: 37px !important;
+          width: 58px !important;
+          transform: scale(2.5) !important;
+          margin: 0px !important;
+        }
+  
+      .label {
+        font-weight: 700 !important;
+      }
+  
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .cab-routes {
+          display: block;
+        }
+  
+        .cab-column {
+          width: 100%;
+          margin: 10px 0;
+        }
+  
+        .logo-img {
+          height: 65px !important;
+          width: 100px !important;
+          transform: scale(2.0) !important;
+          margin: 0px !important;
+        }
+  
+        .price-way-text {
+          margin-top: 24px !important;
+          font-size: 16px !important;
+          margin-left: 24px !important;
+  
+        }
+  
+        .book-round-text {
+          margin-top: 23px !important;
+        }
+  
+        .book-round-text button {
+          padding: 8px !important;
+        }
+      }
+    </style>
+    <script>
+    
+      let directionsService, directionsRenderer
+      
+      function initMap() {
+        const urlParams = new URLSearchParams(window.location.search)
+        const pickup = urlParams.get('pickup')
+        const dropoff = urlParams.get('dropoff')
+        const tripType=urlParams.get('tripType')
+        
+      
+        if (pickup && dropoff) {
+          directionsService = new google.maps.DirectionsService()
+          directionsRenderer = new google.maps.DirectionsRenderer()
+      
+          const map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 7,
+            center: { lat: 41.85, lng: -87.65 } // Default center
+          })
+      
+          directionsRenderer.setMap(map)
+      
+          calculateAndDisplayRoute(pickup, dropoff,tripType)
+        } else {
+          alert('Missing pickup or dropoff location.')
+        }
+      }
+      
+      function calculateAndDisplayRoute(pickup, dropoff,tripType) {
+        directionsService.route(
+          {
+            origin: pickup,
+            destination: dropoff,
+            travelMode: google.maps.TravelMode.DRIVING
+          },
+          (response, status) => {
+            if (status === 'OK') {
+              directionsRenderer.setDirections(response)
+              var distanceValue = response.routes[0].legs[0].distance.text
+              var distance = parseFloat(distanceValue)
+              let value = distance
+              localStorage.setItem('pickup',pickup)
+              localStorage.setItem('drop',dropoff)
+          
+              function replaceToNumeric(value,tripType) {
+                // Remove commas and the " km" suffix
+                return value.replace(/,/g, '').replace(/ km/i, '')
+              }
+              const cars = document.querySelectorAll('.car')
+              cars.forEach((car,index) => {
+                var perKmPrice = parseFloat(car.getAttribute('data-per-km-price'))
+                if (tripType=="Roundway"){
+                  var totalPrice = 2*perKmPrice * distance;
+                 
+                }
+                else{
+                  var totalPrice = perKmPrice * distance;
+                
+                }
+                localStorage.setItem(`total-price ${index}`,JSON.stringify(JSON.stringify(totalPrice)))
+                car.querySelector('.total-price').innerHTML = totalPrice.toFixed(2)
+                car.querySelector('.include-km').innerHTML = distance.toFixed(2)
+                
+             
+              })
+            } else {
+              window.alert('Directions request failed due to ' + status)
+            }
+          }
+        )
+      }
+
+
+    </script>
+    <script>
+    
+  function myfu(button) {
+    // Fetch the car element containing the button
+    const carElement = button.closest('.car');
+    const urlParams = new URLSearchParams(window.location.search)
+    const way=urlParams.get('tripType')
+    // Get the total price calculated and displayed in that car card
+    const totalPrice = carElement.querySelector('.total-price').textContent;
+    const advance=parseFloat(totalPrice*0.1).toFixed(2)
+   
+    
+    // Set the total price and car name in the modal input fields
+    document.getElementById('way').value=way;
+    document.getElementById('total-price').value = totalPrice;
+    document.getElementById('to-pay').value = advance;
+    document.getElementById('carName').value = carElement.querySelector('.hii').textContent.trim();
+pickupLocation=String(localStorage.getItem('pickup'));
+dropLocation=String(localStorage.getItem('drop'));
+    document.getElementById('pickup-location').value = pickupLocation;
+    document.getElementById('drop-location').value = dropLocation;
+  }
+  // Add event listeners to "Book Now" buttons to pass the clicked button element to `myfu`
+  document.querySelectorAll('.book-now').forEach(button => {
+    button.addEventListener('click', function() {
+      myfu(this);
+    });
+  });
+
+
+    </script>
+  </head>
+  <body onload="initMap()">
+    <header>
+      <nav class="navbar">
+        <a href="{% url 'home' %}" id="logo"><img class="logo-img" src="{% static 'images/astlogoss.png' %}" alt="Logo" /></a>
+      </nav>
+    </header>
+
+    <div id="map"></div>
+    <section style="width: 100%; height: 120px; display: flex;justify-content: center;">
+      <div style="width: 87%; height: 120px; background-color: #111;position: absolute;top: 440px;border-radius: 50px;">
+        <div style="display: flex; justify-content: space-evenly;">
+          <p style="color: rgb(255, 174, 0);margin-top: 50px; font-size: larger;">Prices For One Way Trip</p>
+          <a style="margin-top: 40px;" href=""><span>Book round trip for maximum savings!</span>&nbsp;&nbsp;&nbsp;<button id="hello" style="background-color: rgb(255, 174, 0);"></button></a>
+        </div>
+      </div>
+    </section>
+    <p id="totalAmountDisplay"></p>
+
+    <section class="car-catalog">
+      {% for i in tempo %}
+        <div class="car car-card" data-per-km-price="{{ i.price }}">
+          <img src="{{i.car_img.url}}" alt="{{ i.Tempo_name }}" />
+          <h2>{{ i.car_type }}</h2>
+          <p class="hii"> {{ i.Tempo_name }}</p>
+          <div>
+            <div style="display: flex; justify-content: space-between; margin: 10px;">
+              <p>
+                <strong>Seats:</strong>
+              </p>
+              <p style="color: rgb(255, 174, 0);"> {{ i.seat }}</p>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin: 10px;">
+              <p>
+                <strong>Price:</strong>
+              </p>
+              <p style="color: rgb(255, 174, 0);">₹ {{ i.price }}</p>
+            </div>
+           
+            <div style="display: flex; justify-content: space-between; margin: 10px;">
+              <p>
+                <strong>Included Km</strong>
+              </p>
+              <p style="color: rgb(255, 174, 0);" class="include-km"></p>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin: 10px;">
+              <p>
+                <strong>Total pay</strong>
+              </p>
+              <p style="color: rgb(255, 174, 0);" class="total-price"></p>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin: 10px;">
+              <p>
+                <strong>Extra Fare/Km</strong>
+              </p>
+              <p style="color: rgb(255, 174, 0);">₹ {{ i.extra_Fare }}</p>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin: 10px;">
+              <p>
+                <strong>Fuel Charges</strong>
+              </p>
+              <p style="color: rgb(255, 174, 0);">{{ i.fuel_prc }}</p>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin: 10px;">
+              <p>
+                <strong>Driver Charges</strong>
+              </p>
+              <p style="color: rgb(255, 174, 0);">{{ i.driver_prc }}</p>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin: 10px;">
+              <p>
+                <strong>Night Charges</strong>
+              </p>
+              <p style="color: rgb(255, 174, 0);">{{ i.night_prc }}</p>
+            </div>
+            <button style="background-color: transparent;color: #111;text-decoration-line: underline;font-size: 12px;font-weight: 600;"
+            type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Other Terms</button>  
+          </div>
+          <button style="background-color: rgb(255, 174, 0);" type="button" class="book-now" data-bs-toggle="modal"  data-pickup="Pickup Location" 
+          data-drop="Drop Location" data-bs-target="#exampleModal" onclick="myfu(this)">Book Now</button>
+        </div>
+      {% endfor %}
+      <!-- Booking Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Booking Form</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form style="border: 2px solid rgb(255, 174, 0); border-top-left-radius: 15px;border-top-right-radius: 15px;background-image: url(/static/images/form_background_image.jpg);background-repeat: no-repeat;background-size: 100% 100%;" id="bookingForm" action="/submitdata2" method="post">
+              {% csrf_token %}
+              <h5 style="display: flex;justify-content: center; background-color: rgb(255, 174, 0);color: #fff;padding: 2px 0px;border-top-left-radius: 12px;border-top-right-radius: 12px;">way</h5>
+              <div class="modal-body">
+                  <div class="form-group">
+                      <label class="label" for="userName">Name</label>
+                      <input type="text" class="form-control" id="userName" name="uname" required>
+                  </div>
+                  <div class="form-group">
+                      <label class="label" for="userEmail">Email</label>
+                      <input type="email" class="form-control" id="userEmail" name="uemail" required>
+                  </div>
+                  <div class="form-group">
+                      <label class="label" for="userPhone">Phone</label>
+                      <input type="tel" class="form-control" id="userPhone" name="uphone" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="label" >Way</label>
+                    <input type="text" class="form-control" id="way" name="way" required>
+                </div>
+                  <div class="form-group">
+                      <label class="label" for="userPhone">Pickup Location</label>
+                      <input type="text" class="form-control" id="pickup-location"  name="pick" readonly>
+                  </div>
+                  <div class="form-group">
+                      <label class="label" for="userPhone">Drop Location</label>
+                      <input type="text" class="form-control" id="drop-location"  name="drop" readonly>
+                  </div>
+                  <div class="form-group">
+                      <label class="label" for="pickupTime">Departure Date</label>
+                      <input type="date" class="form-control" id="" name="ddate" required>
+                  </div>
+                  <div class="form-group">
+                      <label class="label" for="pickupTime">Arrival Date</label>
+                      <input type="date" class="form-control" id="" name="adate" required>
+                  </div>
+                  <div  style="display: flex;border: 1px solid yellow;border-radius: 12px;padding: 10px;justify-content: space-evenly;margin: 5px;">
+                  <div class="form-group"  style="padding: 8px 20px;">
+                      <label>Total Price</label>
+                      <div style="display: flex; justify-content: center;align-items: center;">
+                        <label style="color: green;">Rs.</label>
+                      <input style="color: green;border: none;width: 90px;background: transparent;" id="total-price" type="number" class="total-price" name="totalprice" readonly></input>
+                      </div>
+                    </div>
+                    <div class="form-group" style="background-color: rgb(255, 174, 0);border-radius: 12px;padding: 8px 20px;">
+                      <label>Advance Payment</label>
+                      <div style="display: flex; justify-content: center;align-items: center;">
+                        <label style="color: white;">Rs.</label>
+                      <input style="color: white;border: none;width: 90px;background-color: rgb(255, 174, 0);" id="to-pay" type="number" class="to-pay" name="" readonly></input>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                      <label class="label">Car Name</label>
+                      <input type="text" class="form-control" id="carName" name="ucarname" readonly>
+                  </div>
+              </div>
+              <div style="display: flex;justify-content: center;align-items: center;">
+              <input style="margin-bottom: 5px;background-color: rgb(255, 124, 2);border: 2px solid white;" type="submit" value="Pay Now" class="btn btn-primary">
+              </div>
+          </form>
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+            <!-- <button type="button" ></button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--terms and condition modal-->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Terms and Conditions</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          {% for i in conditions %}
+          <div class="modal-body" style="background-image: url(/static/images/terms_backg.jpg);background-repeat: no-repeat;background-size: 100% 100%;">
+            <p>{{i.con | safe}}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    </section>
+
+
+    <div id="cities" class="container" style="padding: 20px 0px;">
+      <!-- Popular Cities Section -->
+      <div class="text-center">
+        <h2>POPULAR CITIES</h2>
+        <p class="popular-cities">
+          {% for j in droplocation %}
+          <a href="{% url 'popular' j.id %}">{{j.drop}}</a> | 
+          {% endfor %}
+        </p>
+        <a href="#" class="more-link">+ Explore more cities</a>
+      </div>
+
+      <!-- Divider -->
+      <div class="divider"></div>
+
+      <!-- Services Section -->
+      <div class="text-center">
+        <p class="services">
+          <a href="{% url 'home' %}">ONE WAY CAB</a> | <a href="#">CAR RENTAL</a> | <a href="{% url 'home2' %}">AIRPORT TAXI</a> | <a href="{% url 'travellers' %}">TEMPO TRAVELLER</a> |
+          <a href="{% url 'home' %}">PET FRIENDLY CAB</a> | <a href="{% url 'travellers' %}">BUS</a>
+        </p>
+      </div>
+
+      <!-- Divider -->
+      <div class="divider"></div>
+
+      <!-- Cab Routes Section -->
+      <div class="cab-routes">
+        <!-- Cab from Delhi -->
+        {% for i in pickupLocation %}
+        <div class="cab-column">
+          <!-- <h3>CAB FROM {{i.pickup}}</h3> -->
+          {% for j in droplocation %}
+          <ul>
+            <li>
+              <a href="{% url 'popular' j.id %}">Taxi from {{i.pickup}} to {{j.drop}}</a>
+            </li>
+          </ul>
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Explore More Routes -->
+      <div class="text-center">
+        <a href="#" class="explore-more">+ Explore more routes</a>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+      $('#exampleModal').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget)
+        const price = button.data('price')
+        const carName = button.data('name')
+      
+        $('#totalPrice').val(price)
+        $('#carName').val(carName)
+      })
+    </script>
+     {% if order is not None %}
+     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+     <script>
+         var options = {
+             "key": "rzp_live_QMEG4rXlMpzUbV", // Enter the Key ID generated from the Dashboard
+             "name": "ATD CABS",
+             "amount":"{{order.amount}}",
+             "description": "payment for {{order.id}}",
+             "image": "https://example.com/your_logo",
+             "order_id": "{{order.id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+             "callback_url": "http://127.0.0.1:8000/verify_payment",
+             "prefill": {
+           
+                 "email": "{{b}}",
+                 "contact": "{{c}}"
+             },
+             "theme": {
+                 "color": "#3399cc"
+             }
+         };
+         var rzp1 = new Razorpay(options);
+         rzp1.open();
+     </script>
+       {% endif %}
+  </body>
+</html>

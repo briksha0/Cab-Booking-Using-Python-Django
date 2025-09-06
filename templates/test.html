@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trip Selection</title>
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Basic reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Main button style */
+button {
+  padding: 10px 20px;
+  margin: 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Popup styles */
+.popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+}
+
+.popup-content h2 {
+  margin-bottom: 10px;
+}
+
+.popup-content p {
+  margin-bottom: 20px;
+}
+
+.popup-content button {
+  padding: 8px 15px;
+  font-size: 14px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #888;
+}
+
+#tripSelection {
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- Button to open the popup -->
+  <button onclick="openPopup()">Select Trip Type</button>
+
+  <!-- Popup Modal -->
+  <div id="tripPopup" class="popup">
+    <div class="popup-content">
+      <span class="close" onclick="closePopup()">&times;</span>
+      <h2>Select Trip Type</h2>
+      <p>Please choose the type of trip you want:</p>
+      <button onclick="selectTrip('One-Way')">One-Way Trip</button>
+      <button onclick="selectTrip('Round Trip')">Round Trip</button>
+    </div>
+  </div>
+
+  <p id="tripSelection"></p>
+
+  <script>
+    // Function to open the popup
+function openPopup() {
+  document.getElementById('tripPopup').style.display = 'flex';
+}
+
+// Function to close the popup
+function closePopup() {
+  document.getElementById('tripPopup').style.display = 'none';
+}
+
+// Function to handle trip selection
+function selectTrip(tripType) {
+  // Display the selected trip type
+  document.getElementById('tripSelection').innerText = `You selected: ${tripType}`;
+  // Close the popup
+  closePopup();
+}
+
+// Close popup if user clicks outside the popup content
+window.onclick = function(event) {
+  const popup = document.getElementById('tripPopup');
+  if (event.target == popup) {
+    closePopup();
+  }
+};
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popular City - AstCab</title>
+    <style>
+        /* styles.css */
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: white;
+        }
+
+        .popular-city {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .location-section {
+            text-align: center;
+            background-color: rgb(255, 174, 0);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .details-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .drop-info {
+            flex: 1;
+            min-width: 300px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+
+        .image-details-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .responsive-image {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .responsive-image img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .key-details {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .key-details ul {
+            padding-left: 20px;
+        }
+
+        .places-section {
+            background-color: rgb(255, 174, 0);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .con-div {
+            background-color: rgba(240, 248, 255, 0.705);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            width: 420px;
+            display: flex;
+        }
+
+        .ctainer {
+            background: rgba(0, 0, 0, 0.445);
+            border-radius: 20px;
+            margin-left: 40px;
+            padding: 0%;
+            width: 420px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cab-btn {
+            width: 180px;
+            height: 55px;
+            margin-top: 3px !important;
+            margin-left: 4px;
+            border-radius: 12px;
+            background-color: rgb(255, 174, 0);
+            border: none;
+            font-size: 25px;
+            cursor: pointer;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .temp-btn {
+            display: flex;
+            width: 170px;
+            height: 60px;
+            margin-top: 0px;
+            border: none;
+            font-size: 25px;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 700;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-way-respo {
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: 0px;
+            justify-content: center;
+            align-items: center;
+            column-gap: 10px;
+        }
+
+        .way-respo01 {
+            padding: 5px 33px;
+            background-color: rgb(255, 174, 0);
+            border-radius: 10px;
+        }
+
+        .way-respo02 {
+            padding: 5px 33px;
+            background-color: rgb(255, 174, 0);
+            border-radius: 10px;
+
+        }
+
+        @media (max-width: 768px) {
+
+            .details-section,
+            .image-details-section {
+                flex-direction: column;
+            }
+
+            .drop-info,
+            .form,
+            .responsive-image,
+            .key-details {
+                min-width: 100%;
+            }
+
+            .ctainer {
+                margin-top: 10px;
+                border-radius: 20px;
+                margin-left: 0px !important;
+                padding: 0%;
+                width: 302px !important;
+            }
+
+            .form-cab-temo {
+                width: 150px;
+                height: 50px;
+            }
+
+            .form-cab-temo button {
+                font-size: 15px !important;
+                width: 150px !important;
+                height: 50px !important;
+                margin-top: 0px !important;
+                margin-left: 0px !important;
+                border-bottom-left-radius: 0px !important;
+                border-bottom-right-radius: 0px !important;
+            }
+
+            .con-div {
+                width: 302px;
+            }
+
+            .cab-btn {
+                margin-top: 0px !important;
+                margin-left: 0px !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration-line: none;
+                gap: 10px;
+            }
+
+            .temp-btn {
+                margin-top: 0px !important;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .btn-way-respo {
+                column-gap: 5px !important;
+                margin: 0 !important;
+            }
+
+            .way-respo01 {
+                padding: 5px 20px !important;
+                font-size: 12px;
+            }
+
+            .way-respo02 {
+                padding: 5px 20px !important;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body onload="initAutocomplete()">
+    <div class="popular-city">
+        <!-- Section 1: Pickup to Drop Location -->
+        <section class="location-section">
+            <div class="pickup-drop">
+                <p><strong>Destination:</strong> {{obj.drop}}</p>
+            </div>
+        </section>
+
+        <!-- Section 2: Drop Location Details and Form -->
+        <section class="details-section">
+            <div class="drop-info">
+                <h2>About the Drop Location</h2>
+                <p>
+                    {{obj.drop_loc_info | safe}}
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 3: Image and Key Details -->
+        <section class="image-details-section">
+            <div class="responsive-image">
+                <img src="{{obj.img.url}}" alt="Drop Location">
+            </div>
+            <div class="key-details">
+                <h3>Key Details</h3>
+                <p>{{obj.Key_Travel_Details | safe}}</p>
+            </div>
+        </section>
+
+        <!-- Section 4: Places to Visit -->
+         {% if obj.place_visit %}
+        <section class="places-section">
+            <h3>Places to Visit</h3>
+            <p>
+                {{obj.place_visit | safe}}
+            </p>
+        </section>
+        {% endif %}
+    </div>
+
+</body>
+
+</html>

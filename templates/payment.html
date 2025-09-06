@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Cab Booking - Delhi to Agra</title>
+    <style>
+        /* Global Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+header {
+    background-color: #000;
+    color: #fff;
+    padding: 15px 20px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    color: #fff;
+}
+
+.logo-bold {
+    color: #ffb400;
+}
+
+.sign-in {
+    display: flex;
+    align-items: center;
+}
+
+.sign-in-btn {
+    background-color: #ffb400;
+    border: none;
+    padding: 8px 15px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.sign-in-btn:hover {
+    background-color: #ffa000;
+}
+
+/* Main Content */
+.content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.booking-section {
+    width: 60%;
+}
+
+.booking-section h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.info {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.description {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.image-section {
+    width: 35%;
+}
+
+.taj-image {
+    height: 400px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .content {
+        flex-direction: column;
+    }
+
+    .booking-section, .image-section {
+        width: 100%;
+    }
+
+    .booking-section {
+        margin-bottom: 20px;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-container">
+            <h1 class="logo"><span class="logo-bold">cab</span>bazar</h1>
+        </div>
+    </header>
+
+    <main class="content">
+        <div class="booking-section">
+            <h2>Book Delhi to Agra Cab</h2>
+            <p class="info"><strong>Delhi to Agra distance:</strong> 230 km</p>
+            <p class="info"><strong>Estimated travel time:</strong> 4 hours</p>
+            <p class="description">
+                Agra is home to the Taj Mahal, which is one of the seven wonders of the world. This city in Uttar Pradesh is the top tourist destination in India. It is rich in history with stunning monuments and gardens that reflect the grandeur of the Mughal era. Agra is famous for its vibrant food culture and known for its traditional arts and crafts. This makes it a must-visit destination.
+            </p>
+            <p class="description">
+                Agra stands on the banks of River Yamuna. Once the capital of the powerful Mughal empire, it proudly showcases a royal heritage that attracts people from around the world.
+            </p>
+        </div>
+        <div class="image-section">
+            <img src="./static/images/taj.jpg" alt="Taj Mahal" class="taj-image">
+        </div>
+    </main>
+
+    <script>
+        document.querySelector('.sign-in-btn').addEventListener('click', function() {
+    alert('Sign-in feature coming soon!');
+});
+
+    </script>
+</body>
+</html>

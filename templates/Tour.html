@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AST CAB</title>
+    <link rel="stylesheet" href="mobile.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+      integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxmYQNIYPn1wRMW-E0kpudz-UO3Gcbw1M&libraries=places"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=local_taxi"
+    />
+
+    <link rel="stylesheet" href="{% static './css/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static './css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static './css/owl.carousel.min.css' %}" />
+    <link rel="stylesheet" href="{% static './css/animate.css' %}" />
+    <link rel="stylesheet" href="{% static './css/aos.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static './css/bootstrap-datepicker.css' %}"
+    />
+    <link rel="stylesheet" href="{% static './css/jquery.timepicker.css' %}" />
+    <link rel="stylesheet" href="{% static './css/fancybox.min.css' %}" />
+    <link rel="stylesheet" href="{% static './css/style.css' %}" />
+    <link rel="stylesheet" href="./static/css/styles.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//fonts.googleapis.com/css?family=|Roboto+Sans:400,700|Playfair+Display:400,700"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static './fonts/ionicons/css/ionicons.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static './fonts/fontawesome/css/font-awesome.min.css' %}"
+    />
+    <style>
+        @media (min-width: 1025px) {
+          .black-div{
+            display: block !important;
+          }
+          .video-mobile{
+            display: none !important;
+          }
+          .site-header.scrolled {
+            padding: 5px 0px !important;
+          }
+          .logo-img{
+            height: 80px;
+            width: 100px;
+            transform: scale(2.5);
+          }
+        }
+        @media (max-width: 768px) {
+          .ctainer {
+            margin-left: 0px;
+          }
+        }
+        @media (max-width: 767px) {
+          .logo-img{
+            height: 65px !important;
+            width: 100px !important;
+            transform: scale(2.0) !important;
+          }
+          .site-header{
+            padding: 25px 0px !important;
+          }
+          .navbarburger{
+              max-width: 50% !important;
+          }
+          .header-video{
+            display: none !important;
+          }
+          .over-all-form{
+           min-height: 100vh;
+           max-height: auto;
+          }
+          .ctainer{
+            margin-top: 150px;
+            border-radius: 20px;
+              margin-left: 40px;
+              padding: 0%;
+              width: 300px !important;
+          }
+          .con-div{
+            align-items: center;
+            width: 300px !important;
+          }
+          .form-cab-temo {
+            width: 150px;
+            height: 50px;
+          }
+          .form-cab-temo button{
+            font-size: 15px !important;
+            width: 150px !important;
+            height: 50px !important;
+            margin-top: 0px !important;
+            margin-left: 0px !important;
+            border-bottom-left-radius: 0px !important;
+            border-bottom-right-radius: 0px !important;
+          }
+          .tempo-img{
+            margin-top: 2px !important;
+          }
+          .AirOutStation{
+            align-items: center;
+            padding: 0px 8px;
+            column-gap: 5px;
+            width: 100px;
+          }
+          .AirOutStation-btn button{
+            font-size: 15px !important;
+            padding: 5px 24px !important;
+          }
+          .black-div{
+            display: none !important;
+          }
+          .video-mobile{
+            display: block !important;
+          }
+          .social-icon{
+            width: 100% !important;
+          }
+          .btn-way-respo{
+            column-gap: 5px !important;
+          }
+          .way-respo01{
+            padding: 2px 25px !important;
+            font-size: 12px;
+          }
+          .way-respo02{
+            padding: 2px 27px !important;
+            font-size: 12px;
+          }
+      }
+      </style>
+</head>
+<body  style="padding: 0%" onload="initAutocomplete()">
+    <header class="site-header js-site-header"  style="padding: 20px 0px;">
+        <div class="container-fluid">
+          <div class="row align-items-center">
+            <div class="col-6 col-lg-4 site-logo navbarburger" data-aos="fade">
+              <a href="{% url 'home'%}"><img class="logo-img" src="../static/images/astcablogo.png" alt="AST CAB"></a>
+            </div>
+            <div class="col-6 col-lg-8 navbarburger">
+              <div class="site-menu-toggle js-site-menu-toggle" data-aos="fade">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <!-- END menu-toggle -->
+  
+              <div class="site-navbar js-site-navbar">
+                <nav role="navigation">
+                  <div class="container">
+                    <div class="row full-height align-items-center">
+                      <div class="col-md-6 mx-auto">
+                        <ul class="list-unstyled menu">
+                          <li class="active">
+                            <a href="{% url 'home'%}">Home</a>
+                          </li>
+                          <li><a href="{% url 'travellers'%}">Travellers</a></li>
+                          <li><a href="{% url 'about'%}">About</a></li>
+                          <li><a href="{% url 'contact'%}">Contact</a></li>
+                          <li>
+                            <a href="{% url 'reservation'%}">Reservation</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <footer class="footer-section" style="padding-top: 90px;">
+        <div class="container">
+          <div class="row mb-4">
+            <div class="col-md-3">
+              <ul class="list-unstyled link">
+                <li><a href="{% url 'about'%}">About Us</a></li>
+                <li><a href="#">Terms &amp; Conditions</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Cabs</a></li>
+              </ul>
+            </div>
+            <div class="col-md-3">
+              <ul class="list-unstyled link">
+                <li><a href="#">Traveller</a></li>
+                <li><a href="{% url 'about'%}">About Us</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Cars</a></li>
+              </ul>
+            </div>
+            <div class="col-md-3 pr-md-5 contact-info">
+              <p><span class="d-block"><span class="ion-ios-location h5 mr-3 text-primary"></span>Address:</span> <span>1ST FLOOR, SHOP NO.-106, Plot No- A20, SATYAM
+                MARKET COMPLEX, Raj Nagar, Ghaziabad,
+                Uttar Pradesh, 201002</span></p>
+              
+              <p><span class="d-block"><span class="ion-ios-email h5 mr-3 text-primary"></span>Email:</span> <span>promotions.ast@gmail.com</span></p>
+            </div>
+            <div class="col-md-3">
+              <p><span class="d-block"><span class="ion-ios-telephone h5 mr-3 text-primary"></span>Phone:</span>9717806764, 9871572331, 8076613314, 9990711442
+                , ladline : 0120-2821236 <span></span></p>
+            </div>
+              </form>
+            </div>
+          </div>
+          <div class="row pt-5 social-icon" style="width: 1350px;">
+            <p class="col-md-6 text-left">
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              Copyright &copy;
+              <script>
+                document.write(new Date().getFullYear());
+              </script>
+              All rights reserved |
+              <i class="icon-heart-o" aria-hidden="true"></i> by
+              <a href="#" target="_blank">AST CABS</a>
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            </p>
+  
+            <p class="col-md-6 text-right social">
+              <a href="#"><span class="fa fa-tripadvisor"></span></a>
+              <a href="#"><span class="fa fa-facebook"></span></a>
+              <a href="#"><span class="fa fa-twitter"></span></a>
+              <a href="#"><span class="fa fa-linkedin"></span></a>
+              <a href="#"><span class="fa fa-vimeo"></span></a>
+            </p>
+          </div>
+        </div>
+      </footer>
+</body>
+</html>

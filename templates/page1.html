@@ -1,0 +1,341 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Directions</title>
+    <script
+      async
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxmYQNIYPn1wRMW-E0kpudz-UO3Gcbw1M&libraries=places"
+    ></script>
+    <link rel="stylesheet" href="{% static './css/directions.css' %}" />
+    <style>
+      * {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #000;
+    color: #fff;
+    padding: 15px 20px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    color: #fff;
+}
+
+.logo-bold {
+    color: #ffb400;
+}
+
+.sign-in {
+    display: flex;
+    align-items: center;
+}
+
+.sign-in-btn {
+    background-color: #ffb400;
+    border: none;
+    padding: 8px 15px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.sign-in-btn:hover {
+    background-color: #ffa000;
+}
+
+/* Main Content */
+.content {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.booking-section {
+    width: 60%;
+}
+
+.booking-section h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.info {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.description {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.image-section {
+    width: 35%;
+}
+
+.taj-image {
+    height: 400px;
+    width: 100%;
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .content {
+        flex-direction: column;
+    }
+
+    .booking-section, .image-section {
+        width: 100%;
+    }
+
+    .booking-section {
+        margin-bottom: 20px;
+    }
+}
+
+      #cities {
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
+      line-height: 1.5;
+      width: 100%;
+      margin: 0%;
+      padding: 0%;
+    }
+
+      a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: #00bfff;
+    }
+
+    .container {
+      max-width: 1366px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .divider {
+      border-bottom: 1px solid #444;
+      margin: 20px 0;
+    }
+
+    /* Popular cities section */
+    .popular-cities {
+      font-size: 14px;
+    }
+
+    .popular-cities a {
+      display: inline-block;
+      margin: 0 5px;
+    }
+
+    .more-link {
+      display: block;
+      margin-top: 10px;
+      font-size: 12px;
+    }
+
+    /* Services list */
+    .services {
+      font-size: 14px;
+      margin: 20px 0;
+    }
+
+    /* Cab routes */
+    .cab-routes {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .cab-column {
+      flex: 1;
+      min-width: 200px;
+      margin: 10px;
+    }
+
+    .cab-column h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .cab-column ul {
+      list-style: none;
+    }
+
+    .cab-column li {
+      margin-bottom: 8px;
+    }
+
+    .explore-more {
+      margin-top: 20px;
+      font-size: 12px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .cab-routes {
+        display: block;
+      }
+
+      .cab-column {
+        width: 100%;
+        margin: 10px 0;
+      }
+    }
+    </style>
+    
+  </head>
+  <body onload="initMap()">
+    <header>
+      <nav class="navbar">
+        <a href="{% url 'home'%}" id="logo">
+          <img src="{% static './images/AVT4.png'%}" alt="Logo">
+        </a>
+      </nav>
+    </header>
+
+
+    <main class="content">
+        <div class="booking-section">
+            <h2>Book Delhi to Agra Cab</h2>
+            <p class="info"><strong>Delhi to Agra distance:</strong> 230 km</p>
+            <p class="info"><strong>Estimated travel time:</strong> 4 hours</p>
+            <p class="description">
+                Agra is home to the Taj Mahal, which is one of the seven wonders of the world. This city in Uttar Pradesh is the top tourist destination in India. It is rich in history with stunning monuments and gardens that reflect the grandeur of the Mughal era. Agra is famous for its vibrant food culture and known for its traditional arts and crafts. This makes it a must-visit destination.
+            </p>
+            <p class="description">
+                Agra stands on the banks of River Yamuna. Once the capital of the powerful Mughal empire, it proudly showcases a royal heritage that attracts people from around the world.
+            </p>
+        </div>
+        <div class="image-section">
+            <img style="width: 400px; height: 400px;" src="/main/static/images/taj.jpg" alt="">
+        </div>
+    </main>
+
+    <div class="content">
+      <h1>Page Heading</h1>
+      <p>Paragraph 1: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      <p>Paragraph 2: Nullam venenatis eros sit amet odio sollicitudin pretium.</p>
+      <p>Paragraph 3: Praesent ac tortor sed nibh viverra dignissim id vitae nulla.</p>
+  </div>
+  <div class="image-container">
+      <img src="https://via.placeholder.com/500x400" alt="Sample Image">
+  </div>
+
+
+    <div id="cities" class="container">
+      <!-- Popular Cities Section -->
+      <div class="text-center">
+        <h2>POPULAR CITIES</h2>
+        <p class="popular-cities">
+          <a href="#">AGRA</a> | <a href="#">AHMEDABAD</a> | <a href="#">AHMEDNAGAR</a> | <a href="#">AJMER</a> |
+          <a href="#">ALIGARH</a> | <a href="#">ALLAHABAD</a> | <a href="#">ALMORA</a> | <a href="#">ALWAR</a> |
+          <a href="#">AMBALA</a> | <a href="#">AMBERNATH</a> | <a href="#">AMRAVATI</a> | <a href="#">AMRITSAR</a> |
+          <a href="#">ANAND</a>
+        </p>
+        <a href="#" class="more-link">+ Explore more cities</a>
+      </div>
+  
+      <!-- Divider -->
+      <div class="divider"></div>
+  
+      <!-- Services Section -->
+      <div class="text-center">
+        <p class="services">
+          <a href="#">ONE WAY CAB</a> | <a href="#">CAR RENTAL</a> | <a href="#">AIRPORT TAXI</a> |
+          <a href="#">LOCAL SIGHTSEEING</a> | <a href="#">INNOVA</a> | <a href="#">TEMPO TRAVELLER</a> |
+          <a href="#">PET FRIENDLY CAB</a> | <a href="#">BUS</a>
+        </p>
+      </div>
+  
+      <!-- Divider -->
+      <div class="divider"></div>
+  
+      <!-- Cab Routes Section -->
+      <div class="cab-routes">
+        <!-- Cab from Delhi -->
+        <div class="cab-column">
+          <h3>CAB FROM DELHI</h3>
+          <ul>
+            <li><a href="#">Taxi from Delhi to Agra</a></li>
+            <li><a href="#">Taxi from Delhi to Jaipur</a></li>
+            <li><a href="#">Taxi from Delhi to Chandigarh</a></li>
+            <li><a href="#">Taxi from Delhi to Amritsar</a></li>
+          </ul>
+        </div>
+  
+        <!-- Cab from Bangalore -->
+        <div class="cab-column">
+          <h3>CAB FROM BANGALORE</h3>
+          <ul>
+            <li><a href="#">Taxi from Bangalore to Mysore</a></li>
+            <li><a href="#">Taxi from Bangalore to Coorg</a></li>
+            <li><a href="#">Taxi from Bangalore to Ooty</a></li>
+            <li><a href="#">Taxi from Bangalore to Pondicherry</a></li>
+          </ul>
+        </div>
+  
+        <!-- Cab from Mumbai -->
+        <div class="cab-column">
+          <h3>CAB FROM MUMBAI</h3>
+          <ul>
+            <li><a href="#">Taxi from Mumbai to Shirdi</a></li>
+            <li><a href="#">Taxi from Mumbai to Shani Shingnapur</a></li>
+            <li><a href="#">Taxi from Mumbai to Mahabaleshwar</a></li>
+            <li><a href="#">Taxi from Mumbai to Nashik</a></li>
+          </ul>
+        </div>
+  
+        <!-- Cab from Chennai -->
+        <div class="cab-column">
+          <h3>CAB FROM CHENNAI</h3>
+          <ul>
+            <li><a href="#">Taxi from Chennai to Bangalore</a></li>
+            <li><a href="#">Taxi from Chennai to Pondicherry</a></li>
+            <li><a href="#">Taxi from Chennai to Tirupati</a></li>
+            <li><a href="#">Taxi from Chennai to Mahabalipuram</a></li>
+          </ul>
+        </div>
+      </div>
+  
+      <!-- Explore More Routes -->
+      <div class="text-center">
+        <a href="#" class="explore-more">+ Explore more routes</a>
+      </div>
+    </div>
+  </body>
+</html>

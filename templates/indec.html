@@ -1,0 +1,1041 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link rel="stylesheet" href="{% static './css/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static './css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static './css/owl.carousel.min.css' %}" />
+    <link rel="stylesheet" href="{% static './css/animate.css' %}" />
+    <link rel="stylesheet" href="{% static './css/aos.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static './css/bootstrap-datepicker.css' %}"
+    />
+    <link rel="stylesheet" href="{% static './css/jquery.timepicker.css' %}" />
+    <link rel="stylesheet" href="{% static './css/fancybox.min.css' %}" />
+    <link rel="stylesheet" href="{% static './css/style.css' %}" />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//fonts.googleapis.com/css?family=|Roboto+Sans:400,700|Playfair+Display:400,700"
+    />
+    <link rel="stylesheet" href="fonts/ionicons/css/ionicons.min.css" />
+    <link rel="stylesheet" href="fonts/fontawesome/css/font-awesome.min.css" />
+  </head>
+  <body>
+    <header class="site-header js-site-header">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col-6 col-lg-4 site-logo" data-aos="fade">
+            <a href="index.html">AST CAB</a>
+          </div>
+          <div class="col-6 col-lg-8">
+            <div class="site-menu-toggle js-site-menu-toggle" data-aos="fade">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <!-- END menu-toggle -->
+
+            <div class="site-navbar js-site-navbar">
+              <nav role="navigation">
+                <div class="container">
+                  <div class="row full-height align-items-center">
+                    <div class="col-md-6 mx-auto">
+                      <ul class="list-unstyled menu">
+                        <li class="active"><a href="index.html">Home</a></li>
+                        <li><a href="{% url 'travellers'%}">Travellers</a></li>
+                        <li><a href="{% url 'about'%}">About</a></li>
+                        <li><a href="{% url 'contact'%}">Contact</a></li>
+                        <li><a href="{% url 'reservation'%}">Reservation</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section
+      style="
+        background-image: url(/static/images/bg.png);
+        width: 100%;
+        height: 750px;
+        background-repeat: no-repeat;
+        background-size: cover;
+      "
+    >
+      <div
+        style="
+          height: 100%;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          flex-direction: column;
+        "
+      >
+        <div
+          style="
+            background-color: rgba(240, 248, 255, 0.521);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            margin-left: 40px;
+            margin-top: 100px;
+            width: 420px;
+          "
+        >
+          <a class="btn1" href="index.html"
+            ><button
+              style="
+                width: 180px;
+                height: 70px;
+                margin-top: 10px;
+                border: none;
+                font-size: 28px;
+                background: transparent;
+                cursor: pointer;
+              "
+            >
+              Cabs
+            </button></a
+          >
+          <a class="btn2" href="travellers.html"
+            ><button
+              style="
+                width: 180px;
+                height: 70px;
+                margin-top: 10px;
+                border: none;
+                font-size: 28px;
+                background: transparent;
+                cursor: pointer;
+              "
+            >
+              Travellers
+            </button></a
+          >
+        </div>
+        <div
+          class="container"
+          style="
+            width: 420px;
+            height: 480px;
+            background: rgba(0, 0, 0, 0.445);
+            margin-left: 40px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              margin: 10px;
+              gap: 20px;
+              justify-content: left;
+              color: rgb(202, 202, 17);
+              font-size: 20px;
+            "
+          >
+            <div
+              style="
+                display: flex;
+                gap: 20px;
+                justify-content: left;
+                color: rgb(202, 202, 17);
+                font-size: 20px;
+              "
+              class="checkbox-group"
+            >
+              <input
+                type="checkbox"
+                id="checkbox1"
+                name="tripType"
+                value="Single"
+              />
+              <label for="checkbox1">Single Way Trip</label><br />
+
+              <input
+                type="checkbox"
+                id="checkbox2"
+                name="tripType"
+                value="Round"
+              />
+              <label for="checkbox2">Round Trip</label>
+            </div>
+          </div>
+
+          <div style="margin-top: 10px" class="form-group">
+            <label for="pickup-location">Pickup Location</label>
+            <input
+              type="text"
+              id="pickup-location"
+              placeholder="Enter pickup location"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="dropoff-location">Drop-off Location</label>
+            <input
+              type="text"
+              id="dropoff-location"
+              placeholder="Enter drop-off location"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="mobile">Mobile Number</label>
+            <input
+              type="tel"
+              id="mobile"
+              name="mobile"
+              placeholder="Enter 10-digit number"
+              maxlength="10"
+              required
+              pattern="[0-9]{10}"
+            />
+            <span id="error" class="error"></span><br />
+          </div>
+
+          <div class="form-group" style="margin-top: 30px">
+            <a href="cars.html"><button type="submit">Check Prices</button></a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- END section -->
+     {% for n in page2data%}
+    <section class="py-5 bg-light">
+      <div class="container">
+        <div class="row align-items-center">
+          <div
+            class="col-md-12 col-lg-7 ml-auto order-lg-2 position-relative mb-5"
+            data-aos="fade-up"
+          >
+            <figure class="img-absolute">
+              <img
+                src="{{n.image1.url}}"
+                alt="Image"
+                class="img-fluid"
+              />
+            </figure>
+            <img
+              src="{{n.image2.url}}"
+              alt="Image"
+              class="img-fluid rounded"
+            />
+          </div>
+          <div class="col-md-12 col-lg-4 order-lg-1" data-aos="fade-up">
+            <h2 class="heading">{{n.Page2_Heading}}</h2>
+            <p class="mb-4">
+              {{n.Page2_paragraph}}
+            </p>
+            <p>
+              <a href="#" class="btn btn-primary text-white py-2 mr-3"
+                >Sign Up</a
+              >
+              <span class="mr-3 font-family-serif"><em>or</em></span>
+              <a href="#" data-fancybox class="text-uppercase letter-spacing-1"
+                >Login</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endfor %}
+
+    
+    <section class="section">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-md-7">
+            {% for n in page3hdata%}
+            <h2 class="heading" data-aos="fade-up">{{n.Page3_Heading}}</h2>
+            {% endfor %}
+            {% for n in page3data%}
+            <p style="text-align: left" data-aos="fade-up" data-aos-delay="100">
+              <br /><br /><span
+                style="color: rgb(119, 110, 110); font-size: large"
+                >{{n.Page3_span}}</span
+              >
+              {{n.Page3_paragraph}}
+              
+              {% endfor %}
+              </div>
+            </a>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
+    <section class="section slider-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-md-7">
+            <h2 class="heading" data-aos="fade-up">Our Mission</h2>
+            <p data-aos="fade-up" data-aos-delay="100">
+              Our mission is to redefine urban transportation by offering
+              top-tier cab services that are fast, reliable, and affordable for
+              everyone.
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div
+              class="home-slider major-caousel owl-carousel mb-5"
+              data-aos="fade-up"
+              data-aos-delay="200"
+            >
+              <div class="slider-item">
+                <a
+                  href="/static/images/cab1.jpeg"
+                  data-fancybox="images"
+                  data-caption="Caption for this image"
+                  ><img
+                    src="/static/images/cab1.jpeg"
+                    alt="Image placeholder"
+                    class="img-fluid"
+                /></a>
+              </div>
+              <div class="slider-item">
+                <a
+                  href="/static/images/cab2.jpeg"
+                  data-fancybox="images"
+                  data-caption="Caption for this image"
+                  ><img
+                    src="/static/images/cab2.jpeg"
+                    alt="Image placeholder"
+                    class="img-fluid"
+                /></a>
+              </div>
+              <div class="slider-item">
+                <a
+                  href="/static/images/cab3.jpeg"
+                  data-fancybox="images"
+                  data-caption="Caption for this image"
+                  ><img
+                    src="/static/images/cab3.jpeg"
+                    alt="Image placeholder"
+                    class="img-fluid"
+                /></a>
+              </div>
+              <div class="slider-item">
+                <a
+                  href="/static/images/cab4.jpeg"
+                  data-fancybox="images"
+                  data-caption="Caption for this image"
+                  ><img
+                    src="/static/images/cab4.jpeg"
+                    alt="Image placeholder"
+                    class="img-fluid"
+                /></a>
+              </div>
+              <div class="slider-item">
+                <a
+                  href="/static/images/cab5.jpeg"
+                  data-fancybox="images"
+                  data-caption="Caption for this image"
+                  ><img
+                    src="/static/images/cab5.jpeg"
+                    alt="Image placeholder"
+                    class="img-fluid"
+                /></a>
+              </div>
+              <div class="slider-item">
+                <a
+                  href="/static/images/cab6.jpeg"
+                  data-fancybox="images"
+                  data-caption="Caption for this image"
+                  ><img
+                    src="/static/images/cab6.jpeg"
+                    alt="Image placeholder"
+                    class="img-fluid"
+                /></a>
+              </div>
+              <div class="slider-item">
+                <a
+                  href="/static/images/cab7.jpeg"
+                  data-fancybox="images"
+                  data-caption="Caption for this image"
+                  ><img
+                    src="/static/images/cab7.jpeg"
+                    alt="Image placeholder"
+                    class="img-fluid"
+                /></a>
+              </div>
+            </div>
+            <!-- END slider -->
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- END section -->
+
+    <section
+      class="section bg-image overlay"
+      style="background-image: url('/static/images/cab7.jpeg')"
+    >
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-md-7">
+            <h2 class="heading text-white" data-aos="fade">Features</h2>
+            <p class="text-white" data-aos="fade" data-aos-delay="100">
+              We believe in providing a safe, comfortable, and seamless
+              transportation experience. Since our inception in 2003, we’ve been
+              committed to ensuring you reach your destination quickly and
+              hassle-free.
+            </p>
+          </div>
+        </div>
+        <div class="food-menu-tabs" data-aos="fade">
+          <ul class="nav nav-tabs mb-5" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a
+                class="nav-link active letter-spacing-2"
+                id="mains-tab"
+                data-toggle="tab"
+                href="#mains"
+                role="tab"
+                aria-controls="mains"
+                aria-selected="true"
+                >Layout</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link letter-spacing-2"
+                id="desserts-tab"
+                data-toggle="tab"
+                href="#desserts"
+                role="tab"
+                aria-controls="desserts"
+                aria-selected="false"
+                >Security</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link letter-spacing-2"
+                id="drinks-tab"
+                data-toggle="tab"
+                href="#drinks"
+                role="tab"
+                aria-controls="drinks"
+                aria-selected="false"
+                >Informations</a
+              >
+            </li>
+          </ul>
+          <div class="tab-content py-5" id="myTabContent">
+            <div
+              class="tab-pane fade show active text-left"
+              id="mains"
+              role="tabpanel"
+              aria-labelledby="mains-tab"
+            >
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="food-menu mb-5">
+                    <span class="d-block text-primary h4 mb-3"
+                      >User-friendly Interface</span
+                    >
+                    <h3 class="text-white">
+                      <a href="#" class="text-white">Simple Design</a>
+                    </h3>
+                    <p class="text-white text-opacity-7">
+                      Intuitive, clean, and visually appealing design to make
+                      navigation smooth for all users.
+                    </p>
+                  </div>
+                  <div class="food-menu mb-5">
+                    <h3 class="text-white">
+                      <a href="#" class="text-white">Responsive Layout</a>
+                    </h3>
+                    <p class="text-white text-opacity-7">
+                      Optimized for different devices (desktop, mobile, tablet)
+                      ensuring a seamless experience across all screen sizes.
+                    </p>
+                  </div>
+                  <div class="food-menu mb-5">
+                    <h3 class="text-white">
+                      <a href="#" class="text-white">Easy Booking Process</a>
+                    </h3>
+                    <p class="text-white text-opacity-7">
+                      Streamlined steps for booking with minimal clicks (choose
+                      location, cab type, confirm booking).
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="food-menu mb-5">
+                    <span class="d-block text-primary h4 mb-3"
+                      >Booking Management</span
+                    >
+                    <h3 class="text-white">
+                      <a href="#" class="text-white">Real-time Availability</a>
+                    </h3>
+                    <p class="text-white text-opacity-7">
+                      Show available cabs in real-time for accurate and quick
+                      bookings.
+                    </p>
+                  </div>
+                  <div class="food-menu mb-5">
+                    <h3 class="text-white">
+                      <a href="#" class="text-white">Scheduled Rides</a>
+                    </h3>
+                    <p class="text-white text-opacity-7">
+                      Allow users to schedule rides in advance by setting pickup
+                      times and dates.
+                    </p>
+                  </div>
+                  <div class="food-menu mb-5">
+                    <h3 class="text-white">
+                      <a href="#" class="text-white">Ride Later Option</a>
+                    </h3>
+                    <p class="text-white text-opacity-7">
+                      Book a cab for a later time/date, useful for airport
+                      transfers or business trips.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- .tab-pane -->
+
+            <div
+              class="tab-pane fade text-left"
+              id="desserts"
+              role="tabpanel"
+              aria-labelledby="desserts-tab"
+            >
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="food-menu mb-5">
+                    <span class="d-block text-primary h4 mb-3"
+                      >Location-based Features</span
+                    >
+                    <h3 class="text-white">
+                      <a href="#" class="text-white"
+                        >GPS-based Pickup and Drop-off</a
+                      >
+                    </h3>
+                    <p class="text-white text-opacity-7">
+                      Automatic location detection using GPS for easier and
+                      faster booking.
+                    </p>
+                  </div>
+                  <div class="food-menu mb-5">
+                    <h3 class="text-white">
+                      <a href="#" class="text-white">Live Tracking</a>
+                    </h3>
+                    <p class="text-white text-opacity-7">
+                      Track the driver in real-time after booking, with an
+                      estimated arrival time (ETA) for better transparency.
+                    </p>
+                  </div>
+                  <div class="food-menu mb-5">
+                    <h3 class="text-white">
+                      <a href="#" class="text-white">ETA Display</a>
+                    </h3>
+                    <p class="text-white text-opacity-7">
+                      Estimate the arrival time of the driver and the expected
+                      duration of the journey.
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="food-menu mb-5">
+                    <span class="d-block text-primary h4 mb-3"
+                      >Secure Payment Options</span
+                    >
+                    <h3 class="text-white">
+                      <a href="#" class="text-white"
+                        >Multiple Payment Methods</a
+                      >
+                    </h3>
+                    <p class="text-white text-opacity-7">
+                      Accept a variety of payment options (credit/debit cards,
+                      digital wallets like PayPal, Apple Pay, Google Pay, and
+                      cash).
+                    </p>
+                  </div>
+                  <div class="food-menu mb-5">
+                    <h3 class="text-white">
+                      <a href="#" class="text-white">In-App Payments</a>
+                    </h3>
+                    <p class="text-white text-opacity-7">
+                      Enable secure, seamless payments within the app for a
+                      smoother experience.
+                    </p>
+                  </div>
+                  <div class="food-menu mb-5">
+                    <h3 class="text-white">
+                      <a href="#" class="text-white">Payment Receipt</a>
+                    </h3>
+                    <p class="text-white text-opacity-7">
+                      Automatically generate and send payment receipts via email
+                      or SMS after the ride is completed.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- .tab-pane -->
+            <div
+              class="tab-pane fade text-left"
+              id="drinks"
+              role="tabpanel"
+              aria-labelledby="drinks-tab"
+            >
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="food-menu mb-5">
+                    <span class="d-block text-primary h4 mb-3"
+                      >Driver and Vehicle Information</span
+                    >
+                    <h3 class="text-white">
+                      <a href="#" class="text-white">Driver Profile</a>
+                    </h3>
+                    <p class="text-white text-opacity-7">
+                      Display the driver’s name, photo, rating, and vehicle
+                      details (license plate, model) to ensure user safety and
+                      comfort.
+                    </p>
+                  </div>
+                  <div class="food-menu mb-5">
+                    <h3 class="text-white">
+                      <a href="#" class="text-white"
+                        >Driver Rating and Feedback</a
+                      >
+                    </h3>
+                    <p class="text-white text-opacity-7">
+                      Allow users to rate drivers and provide feedback after
+                      each ride, helping maintain service quality.
+                    </p>
+                  </div>
+                  <div class="food-menu mb-5">
+                    <h3 class="text-white">
+                      <a href="#" class="text-white">Driver Contact</a>
+                    </h3>
+                    <p class="text-white text-opacity-7">
+                      Provide the option to contact the driver for coordination
+                      or updates prior to the ride.
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="food-menu mb-5">
+                    <span class="d-block text-primary h4 mb-3"
+                      >Support and Help Features</span
+                    >
+                    <h3 class="text-white">
+                      <a href="#" class="text-white">24/7 Customer Support</a>
+                    </h3>
+                    <p class="text-white text-opacity-7">
+                      Provide multiple channels (chat, email, phone) for users
+                      to reach customer support at any time.
+                    </p>
+                  </div>
+                  <div class="food-menu mb-5">
+                    <h3 class="text-white">
+                      <a href="#" class="text-white">FAQs Section</a>
+                    </h3>
+                    <p class="text-white text-opacity-7">
+                      Include a detailed FAQ section to address common queries
+                      about booking, payments, and safety.
+                    </p>
+                  </div>
+                  <div class="food-menu mb-5">
+                    <h3 class="text-white">
+                      <a href="#" class="text-white">In-app Chat Support</a>
+                    </h3>
+                    <p class="text-white text-opacity-7">
+                      Allow users to communicate directly with support staff via
+                      in-app chat for quick problem resolution.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- .tab-pane -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- END section -->
+    <section class="section testimonial-section">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-md-7">
+            <h2 class="heading" data-aos="fade-up">People Says</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div
+            class="js-carousel-2 owl-carousel mb-5"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <div class="testimonial text-center slider-item">
+              <div class="author-image mb-3">
+                <img
+                  src="/static/images/person_1.jpg"
+                  alt="Image placeholder"
+                  class="rounded-circle mx-auto"
+                />
+              </div>
+              <blockquote>
+                <p>
+                  &ldquo;A small river named Duden flows by their place and
+                  supplies it with the necessary regelialia. It is a
+                  paradisematic country, in which roasted parts of sentences fly
+                  into your mouth.&rdquo;
+                </p>
+              </blockquote>
+              <p><em>&mdash; Jean Smith</em></p>
+            </div>
+
+            <div class="testimonial text-center slider-item">
+              <div class="author-image mb-3">
+                <img
+                  src="/static/images/person_2.jpg"
+                  alt="Image placeholder"
+                  class="rounded-circle mx-auto"
+                />
+              </div>
+              <blockquote>
+                <p>
+                  &ldquo;Even the all-powerful Pointing has no control about the
+                  blind texts it is an almost unorthographic life One day
+                  however a small line of blind text by the name of Lorem Ipsum
+                  decided to leave for the far World of Grammar.&rdquo;
+                </p>
+              </blockquote>
+              <p><em>&mdash; John Doe</em></p>
+            </div>
+
+            <div class="testimonial text-center slider-item">
+              <div class="author-image mb-3">
+                <img
+                  src="/static/images/person_3.jpg"
+                  alt="Image placeholder"
+                  class="rounded-circle mx-auto"
+                />
+              </div>
+              <blockquote>
+                <p>
+                  &ldquo;When she reached the first hills of the Italic
+                  Mountains, she had a last view back on the skyline of her
+                  hometown Bookmarksgrove, the headline of Alphabet Village and
+                  the subline of her own road, the Line Lane.&rdquo;
+                </p>
+              </blockquote>
+              <p><em>&mdash; John Doe</em></p>
+            </div>
+
+            <div class="testimonial text-center slider-item">
+              <div class="author-image mb-3">
+                <img
+                  src="/static/images/person_1.jpg"
+                  alt="Image placeholder"
+                  class="rounded-circle mx-auto"
+                />
+              </div>
+              <blockquote>
+                <p>
+                  &ldquo;A small river named Duden flows by their place and
+                  supplies it with the necessary regelialia. It is a
+                  paradisematic country, in which roasted parts of sentences fly
+                  into your mouth.&rdquo;
+                </p>
+              </blockquote>
+              <p><em>&mdash; Jean Smith</em></p>
+            </div>
+
+            <div class="testimonial text-center slider-item">
+              <div class="author-image mb-3">
+                <img
+                  src="/static/images/person_2.jpg"
+                  alt="Image placeholder"
+                  class="rounded-circle mx-auto"
+                />
+              </div>
+              <blockquote>
+                <p>
+                  &ldquo;Even the all-powerful Pointing has no control about the
+                  blind texts it is an almost unorthographic life One day
+                  however a small line of blind text by the name of Lorem Ipsum
+                  decided to leave for the far World of Grammar.&rdquo;
+                </p>
+              </blockquote>
+              <p><em>&mdash; John Doe</em></p>
+            </div>
+
+            <div class="testimonial text-center slider-item">
+              <div class="author-image mb-3">
+                <img
+                  src="/static/images/person_3.jpg"
+                  alt="Image placeholder"
+                  class="rounded-circle mx-auto"
+                />
+              </div>
+              <blockquote>
+                <p>
+                  &ldquo;When she reached the first hills of the Italic
+                  Mountains, she had a last view back on the skyline of her
+                  hometown Bookmarksgrove, the headline of Alphabet Village and
+                  the subline of her own road, the Line Lane.&rdquo;
+                </p>
+              </blockquote>
+              <p><em>&mdash; John Doe</em></p>
+            </div>
+          </div>
+          <!-- END slider -->
+        </div>
+      </div>
+    </section>
+
+    <section class="section blog-post-entry bg-light">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-md-7">
+            <h2 class="heading" data-aos="fade-up">
+              Event-specific Cab Booking
+            </h2>
+            <p data-aos="fade-up">
+              Provide prioritized or guaranteed cab availability for specific
+              event dates, ensuring attendees don’t struggle to find
+              transportation during peak times.
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div
+            class="col-lg-4 col-md-6 col-sm-6 col-12 post"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <div class="media media-custom d-block mb-4 h-100">
+              <a href="#" class="mb-4 d-block"
+                ><img
+                  src="/static/images/cab1.jpeg"
+                  alt="Image placeholder"
+                  class="img-fluid"
+              /></a>
+              <div class="media-body">
+                <span class="meta-post">Ride Scheduling</span>
+                <h2 class="mt-0 mb-3">
+                  <a href="#"
+                    >Allow users to schedule rides to and from the event,
+                    ensuring timely pickups and drop-offs.</a
+                  >
+                </h2>
+                <p>
+                  Far far away, behind the word mountains, far from the
+                  countries Vokalia and Consonantia, there live the blind texts.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-lg-4 col-md-6 col-sm-6 col-12 post"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <div class="media media-custom d-block mb-4 h-100">
+              <a href="#" class="mb-4 d-block"
+                ><img
+                  src="/static/images/cab7.jpeg"
+                  alt="Image placeholder"
+                  class="img-fluid"
+              /></a>
+              <div class="media-body">
+                <span class="meta-post">Real-time Shuttle Tracking</span>
+                <h2 class="mt-0 mb-3">
+                  <a href="#"
+                    >Provide attendees with real-time GPS tracking of
+                    event-specific shuttles they’ll be picked up.</a
+                  >
+                </h2>
+                <p>
+                  For larger events, allow users to select from different
+                  designated shuttle pickup points near hotels, parking lots, or
+                  transit stations.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="col-lg-4 col-md-6 col-sm-6 col-12 post"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
+            <div class="media media-custom d-block mb-4 h-100">
+              <a href="#" class="mb-4 d-block"
+                ><img
+                  src="/static/images/cab5.jpeg"
+                  alt="Image placeholder"
+                  class="img-fluid"
+              /></a>
+              <div class="media-body">
+                <span class="meta-post">Festival Services</span>
+                <h2 class="mt-0 mb-3">
+                  <a href="#"
+                    >Provide the ability to schedule rides for hundreds of
+                    attendees arriving at and departing.</a
+                  >
+                </h2>
+                <p>
+                  For multi-day or late-night festivals and conferences, ensure
+                  there are enough drivers available,with ride-sharing options
+                  or incentives to accommodate
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="section bg-image overlay"
+      style="background-image: url('/static/images/cab3.jpeg')"
+    >
+      <div class="container">
+        <div class="row align-items-center">
+          <div
+            class="col-12 col-md-6 text-center mb-4 mb-md-0 text-md-left"
+            data-aos="fade-up"
+          >
+            <h2 class="text-white font-weight-bold">
+              A Best Place for Cabs and Travellers. Book Now!
+            </h2>
+          </div>
+          <div
+            class="col-12 col-md-6 text-center text-md-right"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <a
+              href="reservation.html"
+              class="btn btn-outline-white-primary py-3 text-white px-5"
+              >Book Now</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="section footer-section">
+      <div class="container">
+        <div class="row mb-4">
+          <div class="col-md-3 mb-5">
+            <ul class="list-unstyled link">
+              <li><a href="{% url 'about'%}">About Us</a></li>
+              <li><a href="#">Terms &amp; Conditions</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Cabs</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 mb-5">
+            <ul class="list-unstyled link">
+              <li><a href="{% url 'travellers'%}">Traveller</a></li>
+            <li><a href="{% url 'about'%}">About Us</a></li>
+            <li><a href="{% url 'contact'%}">Contact Us</a></li>
+            <li><a href="{% url 'reservation'%}">Reservation</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 mb-5 pr-md-5 contact-info">
+            <!-- <li>198 West 21th Street, <br> Suite 721 New York NY 10016</li> -->
+            <p>
+              <span class="d-block"
+                ><span class="ion-ios-location h5 mr-3 text-primary"></span
+                >Address:</span
+              >
+              <span>
+                RDC, <br />
+                Ghaziabad</span
+              >
+            </p>
+            <p>
+              <span class="d-block"
+                ><span class="ion-ios-telephone h5 mr-3 text-primary"></span
+                >Phone:</span
+              >
+              <span> (+91) 1234567890</span>
+            </p>
+            <p>
+              <span class="d-block"
+                ><span class="ion-ios-email h5 mr-3 text-primary"></span
+                >Email:</span
+              >
+              <span> info@domain.com</span>
+            </p>
+          </div>
+          <div class="col-md-3 mb-5">
+            <p>Sign up for our newsletter</p>
+            <form action="#" class="footer-newsletter">
+              <div class="form-group">
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="Email..."
+                />
+                <button type="submit" class="btn">
+                  <span class="fa fa-paper-plane"></span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row pt-5">
+          <p class="col-md-6 text-left">
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+            All rights reserved |
+            <i class="icon-heart-o" aria-hidden="true"></i> by
+            <a href="#" target="_blank">AST CAB</a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+          </p>
+
+          <p class="col-md-6 text-right social">
+            <a href="#"><span class="fa fa-tripadvisor"></span></a>
+            <a href="#"><span class="fa fa-facebook"></span></a>
+            <a href="#"><span class="fa fa-twitter"></span></a>
+            <a href="#"><span class="fa fa-linkedin"></span></a>
+            <a href="#"><span class="fa fa-vimeo"></span></a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="{% static './js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static './js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static './js/jquery-migrate-3.0.1.min.js' %}"></script>
+    <script src="{% static './js/popper.min.js' %}"></script>
+    <script src="{% static './js/bootstrap.min.js' %}"></script>
+    <script src="{% static './js/owl.carousel.min.js' %}"></script>
+    <script src="{% static './js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static './js/jquery.fancybox.min.js' %}"></script>
+
+    <script src="{% static './js/aos.js' %}"></script>
+
+    <script src="{% static './js/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'js/jquery.timepicker.min.js' %}"></script>
+
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form</title>
+    <link rel="stylesheet" href="{% static './css/stylees.css' %}" />
+    <script>
+      // Function to display and calculate total amount dynamically
+      function displaySavedData() {
+        const savedData = JSON.parse(localStorage.getItem("bookingData")) || {};
+        document.getElementById("totalCost").textContent = `${savedData}`;
+        const savedData1 = JSON.parse(localStorage.getItem("bookingData1")) || {};
+        document.getElementById("totalCost1").textContent = `${savedData1}`;
+        const savedData2 = JSON.parse(localStorage.getItem("bookingData2")) || {};
+        document.getElementById("totalCost2").textContent = `${savedData2}`;
+        const savedData3 = JSON.parse(localStorage.getItem("bookingData3")) || {};
+        document.getElementById("totalCost3").textContent = `${savedData3}`;
+        const savedData4 = JSON.parse(localStorage.getItem("bookingData4")) || {};
+        document.getElementById("totalCost4").textContent = `${savedData4}`;
+        const savedData5 = JSON.parse(localStorage.getItem("bookingData5")) || {};
+        document.getElementById("totalCost5").textContent = `${savedData5}`;
+
+       } // Set base cost from savedData if availabl
+
+      // Call the function on page load
+      displaySavedData();
+    </script>
+  </head>
+  <body onload="displaySavedData()">
+    <div class="container">
+      <h1>Booking Form</h1>
+      <form id="bookingForm" method="POST" action="{% url 'booking_view' %}">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required />
+      
+        <label for="mobile">Mobile Number:</label>
+        <input type="tel" id="mobile" name="mobile" maxlength="10" required pattern="[0-9]{10}" />
+      
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required />
+      
+        <label for="pickup">Pickup Address:</label>
+        <input type="text" id="pickup" name="pickup" required />
+      
+        <div class="trip-type">
+          <input type="radio" id="single-way" name="trip" value="Single Way" required />
+          <label for="single-way">Single Way</label>
+      
+          <input type="radio" id="round-trip" name="trip" value="Round Trip" />
+          <label for="round-trip">Round Trip</label>
+        </div>
+      
+        <label for="departure">Departure Date:</label>
+        <input type="date" id="departure" name="departure" required />
+      
+        <label for="arrival">Arrival Date:</label>
+        <input type="date" id="arrival" name="arrival" />
+      
+        <div class="total-amount">
+          <p>Total Cost = <span id="totalCost"></span></p>
+        </div>
+      
+        <a href="{% url 'payment_page'%}"><button type="submit">Submit</button></a>
+      </form>
+      
+    </div>
+    
+
+    <script src="{% static 'js/scriptt.js' %}"></script>
+  </body>
+</html>

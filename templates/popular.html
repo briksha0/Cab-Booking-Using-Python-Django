@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popular City - AstCab</title>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxmYQNIYPn1wRMW-E0kpudz-UO3Gcbw1M&libraries=places"></script>
+
+    <style>
+        /* styles.css */
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: white;
+        }
+
+        .popular-city {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        section {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .location-section {
+            text-align: center;
+            background-color: rgb(255, 174, 0);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .details-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .drop-info {
+            flex: 1;
+            min-width: 300px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+
+        .image-details-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .responsive-image {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .responsive-image img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .key-details {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .key-details ul {
+            padding-left: 20px;
+        }
+
+        .places-section {
+            background-color: rgb(255, 174, 0);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .con-div {
+            background-color: rgba(240, 248, 255, 0.705);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            width: 420px;
+            display: flex;
+        }
+
+        .ctainer {
+            background: rgba(0, 0, 0, 0.445);
+            border-radius: 20px;
+            margin-left: 40px;
+            padding: 0%;
+            width: 420px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cab-btn {
+            width: 180px;
+            height: 55px;
+            margin-top: 3px !important;
+            margin-left: 4px;
+            border-radius: 12px;
+            background-color: rgb(255, 174, 0);
+            border: none;
+            font-size: 25px;
+            cursor: pointer;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .temp-btn {
+            display: flex;
+            width: 170px;
+            height: 60px;
+            margin-top: 0px;
+            border: none;
+            font-size: 25px;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 700;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-way-respo {
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: 0px;
+            justify-content: center;
+            align-items: center;
+            column-gap: 10px;
+        }
+
+        .way-respo01 {
+            padding: 5px 33px;
+            background-color: rgb(255, 174, 0);
+            border-radius: 10px;
+        }
+
+        .way-respo02 {
+            padding: 5px 33px;
+            background-color: rgb(255, 174, 0);
+            border-radius: 10px;
+
+        }
+
+        @media (max-width: 768px) {
+
+            .details-section,
+            .image-details-section {
+                flex-direction: column;
+            }
+
+            .drop-info,
+            .form,
+            .responsive-image,
+            .key-details {
+                min-width: 100%;
+            }
+
+            .ctainer {
+                margin-top: 10px;
+                border-radius: 20px;
+                margin-left: 0px !important;
+                padding: 0%;
+                width: 302px !important;
+            }
+
+            .form-cab-temo {
+                width: 150px;
+                height: 50px;
+            }
+
+            .form-cab-temo button {
+                font-size: 15px !important;
+                width: 150px !important;
+                height: 50px !important;
+                margin-top: 0px !important;
+                margin-left: 0px !important;
+                border-bottom-left-radius: 0px !important;
+                border-bottom-right-radius: 0px !important;
+            }
+
+            .con-div {
+                width: 302px;
+            }
+
+            .cab-btn {
+                margin-top: 0px !important;
+                margin-left: 0px !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration-line: none;
+                gap: 10px;
+            }
+
+            .temp-btn {
+                margin-top: 0px !important;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .btn-way-respo {
+                column-gap: 5px !important;
+                margin: 0 !important;
+            }
+
+            .way-respo01 {
+                padding: 5px 20px !important;
+                font-size: 12px;
+            }
+
+            .way-respo02 {
+                padding: 5px 20px !important;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body onload="initAutocomplete()">
+    <div class="popular-city">
+        <!-- Section 1: Pickup to Drop Location -->
+        <section class="location-section">
+            <div class="pickup-drop">
+                <p><strong>Pickup Location:</strong>{{ob.pickup}}</p>
+                <p><strong>Drop Location:</strong> {{ob.drop}}</p>
+            </div>
+        </section>
+
+        <!-- Section 2: Drop Location Details and Form -->
+        <section class="details-section">
+            <div class="drop-info">
+                <h2>About the Drop Location</h2>
+                <p>
+                    {{ob.drop_loc_info | safe}}
+                </p>
+            </div>
+            <div class="over-all-form" style="
+                display: flex;
+                align-items: center;
+                width: 100%;
+                height: 100%;
+                font-family: 'Poppins', serif;
+                font-weight: 600;
+                font-style: normal;
+            ">
+                <div data-aos="flip-left" class="ctainer">
+                    <div class="con-div">
+                        <a class="btn1 form-cab-temo" href="{% url 'home'%}">
+                            <button class="cab-btn">
+                                <img width="30" height="30"
+                                    src="https://img.icons8.com/ios-glyphs/30/FFFFFF/taxi-waiting.png"
+                                    alt="taxi-waiting" />
+                                Cabs
+                            </button>
+                        </a>
+                        <a class="btn2 form-cab-temo" href="{% url 'travellers'%}">
+                            <button class="temp-btn">
+                                <img class="tempo-img" width="25" height="25"
+                                    src="https://img.icons8.com/ios-filled/50/FFFFFF/bus.png" alt="bus" />
+                                Travellers
+                            </button>
+                        </a>
+                    </div>
+                    <h5 style="
+              color: white;
+              align-items: center;
+              display: flex;
+              justify-content: center;
+              background-color: #fdb713c7;
+              height: 50px;
+            ">
+                        All India Cab Service
+                    </h5>
+
+
+                    <form action="{% url 'savecabdata'%}" method="post" style="
+              margin-top: 10px;
+              margin-bottom: 10px;
+              display: flex;
+              flex-direction: column;
+            " id="locationForm" onsubmit="event.preventDefault(); ">
+                        {% csrf_token %}
+                        <div class="btn-way-respo">
+                            <button class="way-respo01"><input type="checkbox" id="round" value="true"
+                                    onclick="selectTripType('round')">Round Trip</button>
+                            <button class="way-respo02"><input type="checkbox" id="oneway" checked value="true"
+                                    onclick="selectTripType('oneWay')">One way
+                                Trip</button>
+                        </div>
+                        <input style="
+                font-size: 16px;
+                color: black;
+                margin: 5px 10px;
+                padding: 5px;
+                border-radius: 15px;
+                border: none;
+                outline: none;
+              " id="pickup" name="pickup" type="text" placeholder="Enter Pickup location" required />
+
+                        <input style="
+                font-size: 16px;
+                color: black;
+                margin: 5px 10px;
+                padding: 5px;
+                border-radius: 15px;
+                border: none;
+                outline: none;
+              " id="dropoff" type="text" name="dropoff" placeholder="Enter drop-off location" value="{{ob.drop}}"
+                            required />
+
+                        <input style="
+                font-size: 16px;
+                color: black;
+                margin: 5px 10px;
+                padding: 7px;
+                border-radius: 15px;
+                border: none;
+                outline: none;
+              " maxlength="10" pattern="[6-9][0-9]{9}" id="number" type="tel" name="number"
+                            placeholder="+91-9874563210" oninput="this.setCustomValidity('')"
+                            oninvalid="this.setCustomValidity('Please enter a valid number.')" required />
+                        <button onclick="submitForm()" style="
+                font-size: 16px;
+                color: black;
+                margin: 15px;
+                padding: 10px;
+                border-radius: 15px;
+                font-weight: 700;
+                color: white;
+                background-color: rgb(255, 174, 0);
+              " type="submit">
+                            Book cab
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Image and Key Details -->
+        <section class="image-details-section">
+            <div class="responsive-image">
+                <img src="{{ob.img.url}}" alt="Drop Location">
+            </div>
+            <div class="key-details">
+                <h3>Key Details</h3>
+                <p>{{ob.Key_Travel_Details | safe}}</p>
+            </div>
+        </section>
+
+        <!-- Section 4: Places to Visit -->
+         {% if ob.place_visit %}
+        <section class="places-section">
+            <h3>Places to Visit</h3>
+            <p>
+                {{ob.place_visit | safe}}
+            </p>
+        </section>
+        {% endif %}
+    </div>
+
+    <script>
+        function selectTripType(tripType) {
+            const roundTripCheckbox = document.getElementById('round');
+            const oneWayTripCheckbox = document.getElementById('oneway');
+
+            if (tripType === 'round') {
+                roundTripCheckbox.checked = true;
+                roundTripCheckbox.value = "true";   // Set value to "true"
+                oneWayTripCheckbox.checked = false;
+                oneWayTripCheckbox.value = "false";
+            } else {
+                roundTripCheckbox.checked = false;
+                roundTripCheckbox.value = "false";  // Set value to "false"
+                oneWayTripCheckbox.checked = true;
+                oneWayTripCheckbox.value = "true";
+            }
+        }
+    </script>
+    <script>
+        window.addEventListener("resize", changeVideoSource);
+
+        function changeVideoSource() {
+            const video = document.getElementsById("backgroundVideo");
+            const source = document.getElementsById("videoSource");
+
+            if (window.innerWidth < 1000) {
+                source.src = "./static/images/vid4.mp4";
+            } else {
+                source.src = "./static/images/vid5.mp4";
+            }
+
+            // Reload the video to reflect the source change
+            video.load();
+        }
+
+        // Trigger on page load
+        changeVideoSource();
+    </script>
+
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("openModalBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementById("closeModalBtn");
+
+        // Get the buttons for trip selection
+        var singleTripBtn = document.getElementById("singleTripBtn");
+        var roundTripBtn = document.getElementById("roundTripBtn");
+
+        // When the user clicks the button, open the modal
+        btn.onclick = function () {
+            modal.style.display = "block";
+        };
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+
+        // Redirect based on the selected trip type
+        singleTripBtn.onclick = function () {
+            window.location.href = "single_trip.html"; // Update with the actual URL of the single trip page
+        };
+
+        roundTripBtn.onclick = function () {
+            window.location.href = "round_trip.html"; // Update with the actual URL of the round trip page
+        };
+    </script>
+    <script>
+        let autocompletePickup, autocompleteDropoff;
+
+        function initAutocomplete() {
+            // Initialize the autocomplete fields
+            autocompletePickup = new google.maps.places.Autocomplete(
+                document.getElementById("pickup")
+            );
+            autocompleteDropoff = new google.maps.places.Autocomplete(
+                document.getElementById("dropoff")
+            );
+        }
+
+        function submitForm() {
+            const pickup = document.getElementById("pickup").value;
+            const dropoff = document.getElementById("dropoff").value;
+            const round = document.getElementById("round").checked; // Check if round trip is selected
+            const oneway = document.getElementById("oneway").checked; // Check if one way is selected
+
+            const tripType = round ? "Roundway" : "Oneway";
+
+            if (pickup && dropoff) {
+                window.location.href = `/directions.html/?pickup=${encodeURIComponent(
+                    pickup
+                )}&dropoff=${encodeURIComponent(dropoff)}&tripType=${tripType}`;
+            } else {
+                alert("Please enter both Pickup and Dropoff locations.");
+            }
+        }
+    </script>
+</body>
+
+</html>

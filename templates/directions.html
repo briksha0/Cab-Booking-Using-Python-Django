@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AST Cab Booking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxmYQNIYPn1wRMW-E0kpudz-UO3Gcbw1M&libraries=places"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+    <link rel="icon" type="image/png" sizes="192x192" href="static/assets/img/favicons/android-icon-192x192.png">
+	  <link rel="preconnect" href="https://fonts.googleapis.com/">
+	  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+	  <link rel="canonical" href="home.html">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --primary: #FF8C00;
+            --secondary: #111111;
+            --accent: #FFD700;
+            --light: #F8F9FA;
+            --dark: #212529;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        #map {
+            height: 42px;
+            width: 100%;
+            border-radius: 12px;
+   
+        }
+        
+        .navbar {
+         
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background:linear-gradient(135deg, var(--secondary), #333);
+  padding: 10px 20px;
+  position: relative;
+}
+
+.logo-img {
+  height: 40px;
+}
+
+/* Hamburger Menu */
+.menu-toggle {
+  display: none;
+}
+
+.hamburger {
+  display: none;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+}
+
+/* Navigation Links */
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links li {
+  position: relative;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #fff; 
+  padding: 8px 12px;
+  transition: background 0.3s;
+}
+
+.nav-links li a:hover {
+
+  background: #333;
+  border-radius: 5px;
+}
+
+/* Dropdown Menu */
+.sub-menu {
+  display: none;
+  position: absolute;
+  background-color: #2d2d3d;
+  top: 100%;
+  left: 0;
+  list-style: none;
+  min-width: 150px;
+  z-index: 1000;
+}
+
+.menu-item-has-children:hover .sub-menu {
+  display: block;
+}
+
+.sub-menu li a {
+  padding: 10px;
+  display: block;
+  white-space: nowrap;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background-color: #1e1e2f;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  .menu-toggle:checked + .hamburger + .nav-links {
+    display: flex;
+  }
+
+  .nav-links li {
+    text-align: center;
+  }
+
+  .menu-item-has-children:hover .sub-menu {
+    position: static;
+  }
+}
+        .trip-banner {
+            background: linear-gradient(135deg, var(--secondary), #333);
+            color: white;
+            border-radius: 20px;
+            transform: translateY(-50%);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            padding: 1.5rem;
+        }
+        
+        .car-catalog {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            margin-top: -2rem;
+        }
+        
+        .car-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .car-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        
+        .car-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .car-details {
+            padding: 1.5rem;
+        }
+        
+        .car-name {
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .car-type {
+            font-size: 0.9rem;
+            color: var(--dark);
+            opacity: 0.8;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 0.75rem 0;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .detail-value {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .social-icon {
+            color: var(--primary);
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: scale(1.2);
+        }
+        
+        .book-btn {
+            background-color: var(--primary);
+            color: white;
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .book-btn:hover {
+            background-color: #e67e00;
+            transform: translateY(-2px);
+        }
+        
+        .modal-content {
+            border-radius: 16px;
+            overflow: hidden;
+            border: none;
+        }
+        
+        .modal-header {
+            background-color: var(--secondary);
+            color: white;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .form-control {
+            border-radius: 8px;
+            padding: 0.75rem;
+            border: 1px solid rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(255, 140, 0, 0.25);
+        }
+        
+        .payment-section {
+            background: rgba(255, 140, 0, 0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .payment-label {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .payment-value {
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .submit-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background-color: #e67e00;
+            transform: translateY(-2px);
+        }
+        
+        .popular-cities {
+            background-color: var(--secondary);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        
+        .city-link {
+            color: white;
+            transition: color 0.3s ease;
+            margin: 0 0.5rem;
+        }
+        
+        .city-link:hover {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .divider {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin: 1.5rem auto;
+            width: 80%;
+        }
+        
+        .route-link {
+            color: white;
+            transition: color 0.3s ease;
+        }
+        
+        .route-link:hover {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        @media (max-width: 768px) {
+            .car-catalog {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+            
+            .trip-banner {
+                padding: 1rem;
+                margin: 0 1rem;
+            }
+        }
+    </style>
+    <script>
+        let directionsService, directionsRenderer;
+        
+        function initMap() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const pickup = urlParams.get('pickup');
+            const dropoff = urlParams.get('dropoff');
+            const tripType = urlParams.get('tripType');
+            
+            document.getElementById("tripTypeDisplay").innerHTML = tripType;
+            
+            if (pickup && dropoff) {
+                directionsService = new google.maps.DirectionsService();
+                directionsRenderer = new google.maps.DirectionsRenderer();
+                
+                const map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 7,
+                    center: { lat: 41.85, lng: -87.65 },
+                    styles: [
+                        {
+                            featureType: "poi",
+                            stylers: [{ visibility: "off" }]
+                        }
+                    ]
+                });
+                
+                directionsRenderer.setMap(map);
+                calculateAndDisplayRoute(pickup, dropoff, tripType);
+            }
+        }
+        
+        function calculateAndDisplayRoute(pickup, dropoff, tripType) {
+            directionsService.route(
+                {
+                    origin: pickup,
+                    destination: dropoff,
+                    travelMode: google.maps.TravelMode.DRIVING
+                },
+                (response, status) => {
+                    if (status === 'OK') {
+                        directionsRenderer.setDirections(response);
+                        var distanceValue = response.routes[0].legs[0].distance.text;
+                        var distance = parseFloat(distanceValue.replace(/,/g, '').replace(/ km/i, ''));
+                        
+                        localStorage.setItem('pickup', pickup);
+                        localStorage.setItem('drop', dropoff);
+                        
+                        const cars = document.querySelectorAll('.car-card');
+                        cars.forEach((car, index) => {
+                            var perKmPrice = parseFloat(car.getAttribute('data-per-km-price'));
+                            var totalPrice = tripType === "Roundway" ? 2 * perKmPrice * distance : perKmPrice * distance;
+                            
+                            localStorage.setItem(`total-price ${index}`, JSON.stringify(totalPrice));
+                            car.querySelector('.total-price').innerHTML = totalPrice.toFixed(2);
+                            car.querySelector('.include-km').innerHTML = distance.toFixed(2);
+                        });
+                    } else {
+                        window.alert('Directions request failed due to ' + status);
+                    }
+                }
+            );
+        }
+        
+        function populateBookingForm(button) {
+            const carElement = button.closest('.car-card');
+            const urlParams = new URLSearchParams(window.location.search);
+            const way = urlParams.get('tripType');
+            const totalPrice = carElement.querySelector('.total-price').textContent;
+            const advance = parseFloat(totalPrice * 0.1).toFixed(2);
+            
+            document.getElementById('way').value = way;
+            document.getElementById('total-price').value = totalPrice;
+            document.getElementById('to-pay').value = advance;
+            document.getElementById('carName').value = carElement.querySelector('.car-name').textContent.trim();
+            document.getElementById('pickup-location').value = localStorage.getItem('pickup');
+            document.getElementById('drop-location').value = localStorage.getItem('drop');
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.book-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    populateBookingForm(this);
+                });
+            });
+        });
+    </script>
+</head>
+<body onload="initMap()">
+    <header>
+         <nav class="navbar">
+  <a href="/home/" class="logo">
+    <img class="logo-img" src="/static/images/astlogoss.png" alt="AST Cab Logo">
+  </a>
+
+  <input type="checkbox" id="menu-toggle" class="menu-toggle">
+  <label for="menu-toggle" class="hamburger">&#9776;</label>
+
+  <ul class="nav-links">
+    <li><a href="{% url 'about' %}">Home</a></li>
+    <li><a href="/about/">About Us</a></li>
+    <li><a href="/cars/">Cars</a></li>
+    <li class="menu-item-has-children">
+      <a href="#">Gallery</a>
+      <ul class="sub-menu">
+        <li><a href="/photo/">Photo</a></li>
+      </ul>
+    </li>
+    <li><a href="/contact/">Contact Us</a></li>
+  </ul>
+</nav>
+    </header>
+
+    <main class="container">
+        <div id="map" class="my-4"></div>
+        
+        <div class="trip-banner text-center mx-auto" style="max-width: 800px;">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mb-0" style="color: var(--accent);">Prices For <span id="tripTypeDisplay"></span> Trip</h4>
+                <button class="btn btn-sm" style="background-color: var(--primary); color: white;">
+                    Book Round Trip for Maximum Savings!
+                </button>
+            </div>
+        </div>
+        
+        <section class="car-catalog">
+            <!-- Sample Car Card 1 -->
+            <div class="car-card" data-per-km-price="15">
+                <img class="car-img" src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Sedan">
+                <div class="car-details">
+                    <h3 class="car-name">Sedan</h3>
+                    <p class="car-type">Toyota Etios</p>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Price:</span>
+                        <span class="detail-value">₹ 15/km</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Included Km:</span>
+                        <span class="detail-value include-km">0</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Total Pay:</span>
+                        <span class="detail-value total-price">0</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Extra Fare/Km:</span>
+                        <span class="detail-value">₹ 12</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Toll Charges:</span>
+                        <span class="detail-value">Actual</span>
+                    </div>
+                    
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    
+                    <button class="btn btn-sm" style="background-color: transparent; color: var(--primary); text-decoration: underline;">
+                        Other Terms
+                    </button>
+                    
+                    <button class="book-btn" data-bs-toggle="modal" data-bs-target="#bookingModal">
+                        Book Now
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Sample Car Card 2 -->
+            <div class="car-card" data-per-km-price="20">
+                <img class="car-img" src="https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="SUV">
+                <div class="car-details">
+                    <h3 class="car-name">SUV</h3>
+                    <p class="car-type">Toyota Innova</p>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Price:</span>
+                        <span class="detail-value">₹ 20/km</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Included Km:</span>
+                        <span class="detail-value include-km">0</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Total Pay:</span>
+                        <span class="detail-value total-price">0</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Extra Fare/Km:</span>
+                        <span class="detail-value">₹ 15</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Toll Charges:</span>
+                        <span class="detail-value">Actual</span>
+                    </div>
+                    
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    
+                    <button class="btn btn-sm" style="background-color: transparent; color: var(--primary); text-decoration: underline;">
+                        Other Terms
+                    </button>
+                    
+                    <button class="book-btn" data-bs-toggle="modal" data-bs-target="#bookingModal">
+                        Book Now
+                    </button>
+                </div>
+            </div>
+            <div class="car-card" data-per-km-price="20">
+                <img class="car-img" src="https://i.pinimg.com/736x/c9/26/9e/c9269e1cd036968d1bbd5f2a05d9e599.jpg" alt="SUV">
+                <div class="car-details">
+                    <h3 class="car-name">SUV</h3>
+                    <p class="car-type">Toyota Innova</p>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Price:</span>
+                        <span class="detail-value">₹ 20/km</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Included Km:</span>
+                        <span class="detail-value include-km">0</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Total Pay:</span>
+                        <span class="detail-value total-price">0</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Extra Fare/Km:</span>
+                        <span class="detail-value">₹ 15</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Toll Charges:</span>
+                        <span class="detail-value">Actual</span>
+                    </div>
+                    
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    
+                    <button class="btn btn-sm" style="background-color: transparent; color: var(--primary); text-decoration: underline;">
+                        Other Terms
+                    </button>
+                    
+                    <button class="book-btn" data-bs-toggle="modal" data-bs-target="#bookingModal">
+                        Book Now
+                    </button>
+                </div>
+            </div>
+            <div class="car-card" data-per-km-price="20">
+                <img class="car-img" src="https://i.pinimg.com/736x/c9/26/9e/c9269e1cd036968d1bbd5f2a05d9e599.jpg" alt="SUV">
+                <div class="car-details">
+                    <h3 class="car-name">SUV</h3>
+                    <p class="car-type">Toyota Innova</p>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Price:</span>
+                        <span class="detail-value">₹ 20/km</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Included Km:</span>
+                        <span class="detail-value include-km">0</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Total Pay:</span>
+                        <span class="detail-value total-price">0</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Extra Fare/Km:</span>
+                        <span class="detail-value">₹ 15</span>
+                    </div>
+                    
+                    <div class="detail-row">
+                        <span class="detail-label">Toll Charges:</span>
+                        <span class="detail-value">Actual</span>
+                    </div>
+                    
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    
+                    <button class="btn btn-sm" style="background-color: transparent; color: var(--primary); text-decoration: underline;">
+                        Other Terms
+                    </button>
+                    
+                    <button class="book-btn" data-bs-toggle="modal" data-bs-target="#bookingModal">
+                        Book Now
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Booking Modal -->
+    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookingModalLabel">Complete Your Booking</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="bookingForm" action="/submitdata" method="post">
+                        <div class="form-group">
+                            <label for="userName" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="userName" name="uname" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="userEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="userEmail" name="uemail" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="userPhone" class="form-label">Phone</label>
+                            <input type="tel" class="form-control" id="userPhone" name="uphone" placeholder="9717806764" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="pickup-location" class="form-label">Pickup Location</label>
+                            <input type="text" class="form-control" id="pickup-location" name="pick" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="drop-location" class="form-label">Drop Location</label>
+                            <input type="text" class="form-control" id="drop-location" name="drop" readonly>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="pickupTime" class="form-label">Pickup Timing</label>
+                            <input type="time" class="form-control" id="pickupTime" name="upickuptime" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="pickupDate" class="form-label">Pickup Date</label>
+                            <input type="date" class="form-control" id="pickupDate" name="upickupDate" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="way" class="form-label">Trip Type</label>
+                            <input type="text" class="form-control" id="way" name="way" readonly>
+                        </div>
+                        
+                        <div class="payment-section">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span class="payment-label">Total Price:</span>
+                                <span class="payment-value">₹ <span id="total-price">0</span></span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span class="payment-label">Advance Payment (10%):</span>
+                                <span class="payment-value">₹ <span id="to-pay">0</span></span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="carName" class="form-label">Car Name</label>
+                            <input type="text" class="form-control" id="carName" name="ucarname" readonly>
+                        </div>
+                        
+                        <div class="text-center mt-4">
+                            <button type="submit" class="submit-btn">
+                                <i class="fas fa-lock me-2"></i> Pay Now Securely
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popular Cities Section -->
+    <section class="popular-cities">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2>POPULAR CITIES</h2>
+                <div class="mt-3">
+                    <a href="#" class="city-link">Delhi</a>
+                    <a href="#" class="city-link">Mumbai</a>
+                    <a href="#" class="city-link">Bangalore</a>
+                    <a href="#" class="city-link">Hyderabad</a>
+                    <a href="#" class="city-link">Chennai</a>
+                </div>
+                <a href="#" class="city-link mt-2 d-inline-block">+ Explore more cities</a>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="text-center mb-4">
+                <div class="services">
+                    <a href="#" class="city-link">ONE WAY CAB</a> | 
+                    <a href="#" class="city-link">CAR RENTAL</a> | 
+                    <a href="#" class="city-link">AIRPORT TAXI</a> | 
+                    <a href="#" class="city-link">TEMPO TRAVELLER</a> |
+                    <a href="#" class="city-link">PET FRIENDLY CAB</a> | 
+                    <a href="#" class="city-link">BUS</a>
+                </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="row text-center">
+                <div class="col-md-4 mb-4">
+                    <h4>CAB FROM DELHI</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="route-link">Taxi from Delhi to Mumbai</a></li>
+                        <li><a href="#" class="route-link">Taxi from Delhi to Jaipur</a></li>
+                        <li><a href="#" class="route-link">Taxi from Delhi to Agra</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <h4>CAB FROM MUMBAI</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="route-link">Taxi from Mumbai to Pune</a></li>
+                        <li><a href="#" class="route-link">Taxi from Mumbai to Goa</a></li>
+                        <li><a href="#" class="route-link">Taxi from Mumbai to Nashik</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4 mb-4">
+                    <h4>CAB FROM BANGALORE</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="route-link">Taxi from Bangalore to Mysore</a></li>
+                        <li><a href="#" class="route-link">Taxi from Bangalore to Chennai</a></li>
+                        <li><a href="#" class="route-link">Taxi from Bangalore to Hyderabad</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <a href="#" class="city-link">+ Explore more routes</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
+    <script>
+        // Initialize booking form population
+        document.querySelectorAll('.book-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                populateBookingForm(this);
+            });
+        });
+    </script>
+
+</body>
+</html>

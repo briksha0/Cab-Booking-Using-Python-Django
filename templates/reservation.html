@@ -1,0 +1,406 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Reservation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=|Roboto+Sans:400,700|Playfair+Display:400,700">
+
+    <link rel="stylesheet" href="{% static './css/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static './css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static './css/owl.carousel.min.css' %}" />
+    <link rel="stylesheet" href="{% static './css/animate.css' %}" />
+    <link rel="stylesheet" href="{% static './css/aos.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static './css/bootstrap-datepicker.css' %}"
+    />
+    <link rel="stylesheet" href="{% static './css/jquery.timepicker.css' %}" />
+    <link rel="stylesheet" href="{% static './css/fancybox.min.css' %}" />
+    <link rel="stylesheet" href="{% static './css/style.css' %}" />
+
+    <!-- Theme Style -->
+     <style>
+      .popular-cities {
+        font-size: 14px;
+      }
+      
+      .popular-cities a {
+        display: inline-block;
+        margin: 0 5px;
+      }
+      .divider {
+        border-bottom: 1px solid #444;
+        margin: 20px 0;
+      }
+      .cab-column {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        /* min-width: 200px; */
+        margin: 10px;
+        column-gap: 30px;
+      }
+      
+      .cab-column h3 {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+      
+      .cab-column ul {
+        list-style: none;
+      }
+      .cab-column li {
+        margin-bottom: 8px;
+      }
+      .explore-more {
+        margin-top: 20px;
+        font-size: 12px;
+      }
+      .social-icon{
+          width: 100% !important;
+        }
+        @media (min-width: 1025px) {
+        .site-header.scrolled {
+          padding: 5px 0px !important;
+        }
+        .logo-img{
+          height: 25px;
+          width: 35px;
+          transform: scale(2.5);
+        }
+      }
+      @media (max-width: 767px) {
+        .logo-img{
+          height: 35px !important;
+          width: 45px !important;
+          transform: scale(2.0) !important;
+        }
+      }     </style>
+  </head>
+  <body>
+    
+    <header class="site-header js-site-header"  style="padding: 20px 0px;">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <div class="col-6 col-lg-4 site-logo navbarburger" data-aos="fade">
+            <a href="{% url 'home'%}"><img class="logo-img" src="../static/images/astlogoss.png" alt="AST CAB"></a>
+          </div>
+          <div class="col-6 col-lg-8">
+
+
+            <div class="site-menu-toggle js-site-menu-toggle"  data-aos="fade">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <!-- END menu-toggle -->
+
+            <div class="site-navbar js-site-navbar">
+              <nav role="navigation">
+                <div class="container">
+                  <div class="row full-height align-items-center">
+                    <div class="col-md-6 mx-auto">
+                      <ul class="list-unstyled menu">
+                        <li class="active"><a href="{% url 'home'%}">Home</a></li>
+                        <li><a href="{% url 'travellers'%}">Travellers</a></li>
+                        <li><a href="{% url 'about'%}">About</a></li>
+                        <li><a href="{% url 'contact'%}">Contact</a></li>
+                        <li><a href="{% url 'reservation'%}">Reservation</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- END head -->
+
+    <section class="site-hero inner-page overlay" style="background-image: url(/static/images/Untitled\ design\ \(11\).png)" data-stellar-background-ratio="0.5">
+      <div class="container">
+        <div class="row site-hero-inner justify-content-center align-items-center">
+          <div class="col-md-10 text-center" data-aos="fade">
+            <h1 class="heading mb-3">Reservation Form</h1>
+            <ul class="custom-breadcrumbs mb-4">
+              <li><a href="{% url 'home' %}">Home</a></li>
+              <li>&bullet;</li>
+              <li>Reservation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <a class="mouse smoothscroll" href="#next">
+        <div class="mouse-icon">
+          <span class="mouse-wheel"></span>
+        </div>
+      </a>
+    </section>
+    <!-- END section -->
+
+    <section class="section contact-section" id="next">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-7" data-aos="fade-up" data-aos-delay="100">
+            
+            <form action="submitdataResrvation" method="post" class="bg-white p-md-5 p-4 mb-5 border">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label for="name" style="color: black;">Name</label>
+                  <input type="text" id="name" class="form-control " name="uname">
+                </div>
+                <div class="col-md-6 form-group">
+                  <label for="phone" style="color: black;">Phone</label>
+                  <input type="text" id="phone" class="form-control " name="uphone">
+                </div>
+              </div>
+          
+              <div class="row">
+                <div class="col-md-12 form-group">
+                  <label for="email" style="color: black;">Email</label>
+                  <input type="email" id="email" class="form-control " name="uemail">
+                </div>
+              </div>
+              <div class="row mb-4">
+                <div class="col-md-12 form-group">
+                  <label for="message" style="color: black;">Write Message</label>
+                  <textarea name="umessage" id="message" class="form-control " cols="30" rows="8"></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <input type="submit" value="Send Message" class="btn btn-primary text-white font-weight-bold">
+                </div>
+              </div>
+            </form>
+
+          </div>
+          <div class="col-md-5" data-aos="fade-up" data-aos-delay="200">
+            <div class="row">
+              <div class="col-md-10 ml-auto contact-info">
+                <p><span class="d-block">Address:</span> <span class="text-black">1ST FLOOR, SHOP NO.-106, Plot No- A20, SATYAM
+                  MARKET COMPLEX, Raj Nagar, Ghaziabad,
+                  Uttar Pradesh, 201002</span></p>
+                <p><span class="d-block">Phone:</span>  <span class="text-black">9717806764,
+                  9871572331, 
+                  8076613314, 
+                  9990711442 <br>
+                  ladline : 0120-2821236
+                  </span></p>
+                <p><span class="d-block">Email:</span> <span class="text-black"> promotions.ast@gmail.com</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section testimonial-section bg-light">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-md-7">
+            <h2 class="heading" data-aos="fade-up">People Says</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="js-carousel-2 owl-carousel mb-5" data-aos="fade-up" data-aos-delay="200">
+            
+            <div class="testimonial text-center slider-item">
+              <div class="author-image mb-3">
+                <img src="/static/images/person_1.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
+              </div>
+              <blockquote>
+
+                <p>&ldquo;A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.&rdquo;</p>
+              </blockquote>
+              <p><em>&mdash; Jean Smith</em></p>
+            </div> 
+
+            <div class="testimonial text-center slider-item">
+              <div class="author-image mb-3">
+                <img src="/static/images/person_2.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
+              </div>
+              <blockquote>
+                <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.&rdquo;</p>
+              </blockquote>
+              <p><em>&mdash; John Doe</em></p>
+            </div>
+
+            <div class="testimonial text-center slider-item">
+              <div class="author-image mb-3">
+                <img src="/static/images/person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
+              </div>
+              <blockquote>
+
+                <p>&ldquo;When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane.&rdquo;</p>
+              </blockquote>
+              <p><em>&mdash; John Doe</em></p>
+            </div>
+
+
+            <div class="testimonial text-center slider-item">
+              <div class="author-image mb-3">
+                <img src="/static/images/person_1.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
+              </div>
+              <blockquote>
+
+                <p>&ldquo;A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.&rdquo;</p>
+              </blockquote>
+              <p><em>&mdash; Jean Smith</em></p>
+            </div> 
+
+            <div class="testimonial text-center slider-item">
+              <div class="author-image mb-3">
+                <img src="/static/images/person_2.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
+              </div>
+              <blockquote>
+                <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.&rdquo;</p>
+              </blockquote>
+              <p><em>&mdash; John Doe</em></p>
+            </div>
+
+            <div class="testimonial text-center slider-item">
+              <div class="author-image mb-3">
+                <img src="/static/images/person_3.jpg" alt="Image placeholder" class="rounded-circle mx-auto">
+              </div>
+              <blockquote>
+
+                <p>&ldquo;When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane.&rdquo;</p>
+              </blockquote>
+              <p><em>&mdash; John Doe</em></p>
+            </div>
+
+          </div>
+            <!-- END slider -->
+        </div>
+
+      </div>
+    </section>
+
+    
+    
+    <section class="section bg-image overlay" style="background-image: url('/static/images/cab3.png');">
+      <div class="container" >
+        <div class="row align-items-center">
+          <div class="col-12 col-md-6 text-center mb-4 mb-md-0 text-md-left" data-aos="fade-up">
+            <h2 class="text-white font-weight-bold">A Best Place for Cabs and Travellers. Book Now!</h2>
+          </div>
+          <div class="col-12 col-md-6 text-center text-md-right" data-aos="fade-up" data-aos-delay="200">
+            <a href="{% url 'home' %}" class="btn btn-outline-white-primary py-3 text-white px-5">Book Now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer-section" style="padding-top: 30px;">
+      <div class="container">
+        <div class="text-center">
+          <h2 style="color: #fff;">POPULAR CITIES</h2>
+          <p class="popular-cities">
+            {% for j in droplocation %}
+            <a href="{% url 'popularCity' j.id %}">{{j.drop}}</a>
+            {% endfor %}
+          </p>
+          <a href="#" class="more-link" style="font-size: 12px;">+ Explore more cities</a>
+        </div>
+        <div class="divider"></div>
+        <!-- Cab Routes Section -->
+        <div class="cab-routes">
+          <!-- Cab from Delhi -->
+          {% for i in pickupLocation %}
+          <div class="cab-column">
+            <!-- <h3>CAB FROM {{i.pickup}}</h3> -->
+            {% for j in droplocation %}
+            <ul>
+              <li>
+                <a href="{% url 'popular' j.id %}">Taxi from {{i.pickup}} to {{j.drop}}</a>
+              </li>
+            </ul>
+            {% endfor %}
+          </div>
+          {% endfor %}
+          <a href="#" class="more-link" style="font-size: 12px;">+ Explore more cities</a>
+  
+        </div>
+        <div class="divider"></div>
+        <div class="row mb-4">
+          <div class="col-md-3">
+            <ul class="list-unstyled link">
+              <li><a href="{% url 'about'%}">About Us</a></li>
+              <li><a href="#">Terms &amp; Conditions</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Cabs</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <ul class="list-unstyled link">
+              <li><a href="{% url 'travellers'%}">Traveller</a></li>
+            <li><a href="{% url 'about'%}">About Us</a></li>
+            <li><a href="{% url 'contact'%}">Contact Us</a></li>
+            <li><a href="{% url 'reservation'%}">Reservation</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 pr-md-5 contact-info">
+            <p><span class="d-block"><span class="ion-ios-location h5 mr-3 text-primary"></span>Address:</span> <span>1ST FLOOR, SHOP NO.-106, Plot No- A20, SATYAM
+              MARKET COMPLEX, Raj Nagar, Ghaziabad,
+              Uttar Pradesh, 201002</span></p>
+            
+            <p><span class="d-block"><span class="ion-ios-email h5 mr-3 text-primary"></span>Email:</span> <span>promotions.ast@gmail.com</span></p>
+          </div>
+          <div class="col-md-3">
+            <p><span class="d-block"><span class="ion-ios-telephone h5 mr-3 text-primary"></span>Phone:</span>9717806764, 9871572331, 8076613314, 9990711442
+              , ladline : 0120-2821236 <span></span></p>
+          </div>
+            </form>
+          </div>
+        </div>
+        <div class="row pt-5 social-icon" style="width: 1350px;">
+          <p class="col-md-6 text-left">
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright &copy;
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+            All rights reserved |
+            <i class="icon-heart-o" aria-hidden="true"></i> by
+            <a href="#" target="_blank">AST CABS</a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+          </p>
+
+          <p class="col-md-6 text-right social">
+            <a href="#"><span class="fa fa-tripadvisor"></span></a>
+            <a href="#"><span class="fa fa-facebook"></span></a>
+            <a href="#"><span class="fa fa-twitter"></span></a>
+            <a href="#"><span class="fa fa-linkedin"></span></a>
+            <a href="#"><span class="fa fa-vimeo"></span></a>
+          </p>
+        </div>
+      </div>
+    </footer>
+  
+  <script src="{% static './js/bootstrap.bundle.js' %}"></script>
+    <script src="{% static './js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static './js/jquery-migrate-3.0.1.min.js' %}"></script>
+    <script src="{% static './js/popper.min.js' %}"></script>
+    <script src="{% static './js/bootstrap.min.js' %}"></script>
+    <script src="{% static './js/owl.carousel.min.js' %}"></script>
+    <script src="{% static './js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static './js/jquery.fancybox.min.js' %}"></script>
+
+    <script src="{% static './js/aos.js' %}"></script>
+
+    <script src="{% static './js/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'js/jquery.timepicker.min.js' %}"></script>
+
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

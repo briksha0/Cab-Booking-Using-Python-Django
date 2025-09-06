@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pop-Up with Links</title>
+    <style>
+        /* Basic styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+        }
+
+        /* Pop-up styles */
+        .popup {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 50%; /* Center the pop-up horizontally */
+            top: 50%; /* Center the pop-up vertically */
+            transform: translate(-50%, -50%); /* Offset to truly center */
+            background-color: #fff;
+            border: 1px solid #888;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Button styles inside the pop-up */
+        .popup-button {
+            padding: 10px 15px;
+            background-color: #007BFF; /* Blue for buttons */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+
+        .popup-button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+        /* Close button styles */
+        .close-popup {
+            color: #aaa;
+            float: right;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .close-popup:hover {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- The Pop-Up -->
+    <div class="popup" id="myPopup">
+        <span class="close-popup" id="closePopupBtn">&times;</span>
+        <h2>Select an Option</h2>
+        <button class="popup-button" id="page1Btn">Round Trip</button>
+        <button class="popup-button" id="page2Btn">Single Way Trip</button>
+    </div>
+
+    <script>
+        // Get the pop-up
+        var popup = document.getElementById("myPopup");
+
+        // Show the pop-up when the page loads
+        window.onload = function() {
+            popup.style.display = "block";
+        }
+
+        // Get the <span> element that closes the pop-up
+        var closeBtn = document.getElementById("closePopupBtn");
+
+        // Get the buttons for navigation
+        var page1Btn = document.getElementById("page1Btn");
+        var page2Btn = document.getElementById("page2Btn");
+
+        // When the user clicks the close button, close the pop-up
+        closeBtn.onclick = function() {
+            popup.style.display = "none";
+        }
+
+        // When the user clicks on the page 1 button, redirect to page 1
+        page1Btn.onclick = function() {
+            window.location.href = "directions.html"; // Update with the actual URL of Page 1
+        }
+
+        // When the user clicks on the page 2 button, redirect to page 2
+        page2Btn.onclick = function() {
+            window.location.href = "directions2.html"; // Update with the actual URL of Page 2
+        }
+    </script>
+
+</body>
+</html>
