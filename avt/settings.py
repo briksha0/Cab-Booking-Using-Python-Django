@@ -24,8 +24,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-vt$23d6j$h82=z#%9xdc9wacd7c2%9nr0ch&8ohpuu2-@h^_fh'
 APPEND_SLASH = False
 CSRF_TRUSTED_ORIGINS = [
-    'https://astcab.com',
-    'https://www.astcab.com'  # Add this if the site can be accessed with 'www'
+    'https://avtcab.com',
+    'https://www.avtcab.com'  # Add this if the site can be accessed with 'www'
 ]
 CSRF_COOKIE_SECURE = True  # Use this if you're using HTTPS
 SESSION_COOKIE_SECURE = True  # Same here
@@ -40,16 +40,17 @@ os.environ['SSL_CERT_FILE'] = certifi.where()
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['www.avtcab.com''192.168.16.130']
 EMAIL_HOST='smtp.gmail.com'
 EMAIL_HOST_USER='promotions.ast@gmail.com'
 EMAIL_HOST_PASSWORD='thqf yxba eqkl ydqv'
 EMAIL_PORT=587
 EMAIL_USE_TLS=True 
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['avtcab.com', 'www.avtcab.com', '192.168.16.130']
+
 
 
 # Application definition
